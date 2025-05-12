@@ -331,7 +331,7 @@
                 <!-- ロゴ -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <a href="/" class="flex items-center">
+                        <a href="index.html" class="flex items-center">
                             <i class="fas fa-museum text-2xl sm:text-3xl text-blue-700 mr-2 sm:mr-3"></i>
                             <div>
                                 <h1 class="text-sm sm:text-base md:text-xl font-bold text-gray-900">里庄町歴史民俗資料館<span class="hidden md:inline">デジタルミュージアム</span></h1>
@@ -344,18 +344,18 @@
                 <!-- デスクトップナビゲーション -->
                 <nav class="hidden lg:flex items-center space-x-8">
                     <div class="relative group">
-                        <a href="#exhibitions" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors group">
+                        <a href="index.html#exhibitions" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors group">
                             展示
                             <i class="fas fa-chevron-down text-xs ml-1"></i>
                         </a>
                         <div class="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
-                            <a href="#virtual-tour" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700">バーチャルツアー</a>
-                            <a href="#3d-models" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700">3Dコレクション</a>
-                            <a href="#special-exhibitions" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700">特別展示</a>
+                            <a href="index.html#virtual-tour" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700">バーチャルツアー</a>
+                            <a href="index.html#3d-models" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700">3Dコレクション</a>
+                            <a href="index.html#special-exhibitions" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700">特別展示</a>
                         </div>
                     </div>
-                    <a href="#research" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors">研究</a>
-                    <a href="#education" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors">教育</a>
+                    <a href="index.html#research" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors">研究</a>
+                    <a href="index.html#education" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors">教育</a>
                     <a href="userguide.html" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors">当館について</a>
                 </nav>
                 
@@ -387,9 +387,9 @@
         <!-- モバイルメニュー -->
         <div id="mobileMenu" class="lg:hidden hidden bg-white border-t">
             <div class="px-4 py-2 space-y-1">
-                <a href="#exhibitions" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">展示</a>
-                <a href="#research" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">研究</a>
-                <a href="#education" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">教育</a>
+                <a href="index.html#exhibitions" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">展示</a>
+                <a href="index.html#research" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">研究</a>
+                <a href="index.html#education" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">教育</a>
                 <a href="userguide.html" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">当館について</a>
             </div>
         </div>
@@ -461,37 +461,20 @@
         <section class="py-10 sm:py-16 bg-gray-50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- 資料グリッド -->
-                <div id="document-grid" class="grid grid-cols-2 gap-3 sm:gap-6 md:gap-8">
+                <div id="document-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
                     <!-- 歴史資料カード -->
-                    <a href="/documents/detail?id=123" class="document-card card rounded-xl overflow-hidden shadow-md block" data-tags="小川郷太郎,明治時代,里庄町史,書状" data-type="historical">
+                    <a href="id1.html" class="document-card card rounded-xl overflow-hidden block" data-tags="小川郷太郎,明治時代,里庄町史,書状" data-type="historical">
                         <div class="image-container relative">
                             <span class="type-badge type-historical">歴史資料</span>
-                            <img src="/api/placeholder/600/400" alt="小川郷太郎関連資料" class="w-full h-full object-cover">
+                            <img src="id1pic.JPG" alt="小川郷太郎関連資料" class="w-full h-full object-cover">
                         </div>
                         <div class="content p-2 sm:p-4">
-                            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-3">小川郷太郎書簡集（1880-1910）</h3>
+                            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-3">小川郷太郎(仮名)</h3>
                             <div class="flex flex-wrap">
                                 <span class="tag">#小川郷太郎</span>
                                 <span class="tag">#明治時代</span>
                                 <span class="tag">#里庄町史</span>
                                 <span class="tag">#書状</span>
-                            </div>
-                        </div>
-                    </a>
-                    
-                    <!-- 歴史資料カード2 -->
-                    <a href="/documents/detail?id=124" class="document-card card rounded-xl overflow-hidden shadow-md block" data-tags="古文書,江戸時代,文政年間,絵図" data-type="historical">
-                        <div class="image-container relative">
-                            <span class="type-badge type-historical">歴史資料</span>
-                            <img src="/api/placeholder/600/400" alt="江戸時代古文書" class="w-full h-full object-cover">
-                        </div>
-                        <div class="content p-2 sm:p-4">
-                            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-3">文政年間 里庄村絵図</h3>
-                            <div class="flex flex-wrap">
-                                <span class="tag">#古文書</span>
-                                <span class="tag">#江戸時代</span>
-                                <span class="tag">#文政年間</span>
-                                <span class="tag">#絵図</span>
                             </div>
                         </div>
                     </a>
@@ -549,11 +532,11 @@
                 <div>
                     <h4 class="text-white text-sm sm:text-base font-semibold mb-4">展示・コレクション</h4>
                     <ul class="space-y-2 text-xs sm:text-sm">
-                        <li><a href="#" class="hover:text-white transition-colors">常設展示</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">特別展示</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">3Dコレクション</a></li>
+                        <li><a href="index.html#exhibitions" class="hover:text-white transition-colors">常設展示</a></li>
+                        <li><a href="index.html#exhibitions" class="hover:text-white transition-colors">特別展示</a></li>
+                        <li><a href="index.html#exhibitions" class="hover:text-white transition-colors">3Dコレクション</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">デジタルアーカイブ</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">バーチャルツアー</a></li>
+                        <li><a href="index.html#exhibitions" class="hover:text-white transition-colors">バーチャルツアー</a></li>
                     </ul>
                 </div>
                 
@@ -561,8 +544,8 @@
                 <div>
                     <h4 class="text-white text-sm sm:text-base font-semibold mb-4">サービス・サポート</h4>
                     <ul class="space-y-2 text-xs sm:text-sm">
-                        <li><a href="#" class="hover:text-white transition-colors">利用案内</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">よくある質問</a></li>
+                        <li><a href="userguide.html" class="hover:text-white transition-colors">利用案内</a></li>
+                        <li><a href="https://katsujiringx.github.io/systemX/" class="hover:text-white transition-colors">運営元（KatsujiRingX）</a></li>
                     </ul>
                 </div>
             </div>
@@ -571,7 +554,7 @@
             <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="text-xs sm:text-sm mb-4 md:mb-0">
-                        &copy; 2025 里庄町歴史民俗資料館デジタルミュージアム by katsujiRingX. All rights reserved.
+                        &copy; 2025 里庄町歴史民俗資料館デジタルミュージアム by KatsujiRingX. All rights reserved.
                     </div>
                     <div class="flex flex-wrap gap-4 text-xs sm:text-sm">
                         <a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a>
@@ -595,6 +578,9 @@
                     loadingScreen.style.display = 'none';
                 }, 500);
             }, 1000);
+
+            // URLからクエリパラメータを取得
+            processUrlParameters();
         });
         
         // スクロールプログレスバー
@@ -752,6 +738,35 @@
             return text.replace(regex, '<span class="highlight">$1</span>');
         }
         
+        // URLからクエリパラメータを取得する関数
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        
+        // URLのパラメータを処理する関数
+        function processUrlParameters() {
+            const keyword = getQueryParam('keyword');
+            const type = getQueryParam('type');
+            
+            // キーワードがある場合、検索を実行
+            if (keyword) {
+                document.getElementById('search-keyword').value = keyword;
+                searchDocuments(keyword);
+            }
+            
+            // タイプがある場合、該当フィルターを有効にする
+            if (type) {
+                document.querySelectorAll('.filter-button').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-type') === type) {
+                        btn.classList.add('active');
+                    }
+                });
+                filterByType(type);
+            }
+        }
+        
         // もっと見るボタン
         document.getElementById('load-more').addEventListener('click', function() {
             // 現在のフィルターを取得
@@ -762,12 +777,11 @@
                 {
                     id: 129,
                     image: '/api/placeholder/600/400',
-                    title: '大正期 小川郷太郎政治活動資料',
+                    title: '準備中',
                     type: 'historical',
                     typeName: '歴史資料',
                     tags: ['小川郷太郎', '大正時代', '政治', '議会']
-                },
-               
+                }
             ];
             
             const grid = document.getElementById('document-grid');
