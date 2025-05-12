@@ -15,6 +15,7 @@
             font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
         
         .serif-heading {
@@ -152,101 +153,131 @@
                 transform: translateY(-5px);
             }
         }
+        
+        /* スマホ表示の改善 */
+        @media (max-width: 640px) {
+            body {
+                overflow-x: hidden;
+            }
+            
+            h1, h2, h3, h4, h5, h6, p, li, a, span {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+            }
+            
+            .text-4xl {
+                font-size: 1.75rem;
+            }
+            
+            .text-5xl {
+                font-size: 2rem;
+            }
+            
+            .text-xl {
+                font-size: 1.125rem;
+            }
+            
+            .text-2xl {
+                font-size: 1.35rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- ヘッダー -->
     <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
         <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center justify-between h-16 sm:h-20">
                 <div class="flex items-center">
                     <a href="#" class="flex items-center group">
-                        <i class="fas fa-landmark text-3xl text-blue-700 mr-3 group-hover:text-blue-800 transition-colors"></i>
+                        <i class="fas fa-landmark text-2xl sm:text-3xl text-blue-700 mr-2 sm:mr-3 group-hover:text-blue-800 transition-colors"></i>
                         <div>
-                            <h1 class="text-xl font-bold text-gray-900 serif-heading">里庄町歴史民俗資料館デジタルミュージアム</h1>
-                            <p class="text-xs text-gray-600">Satosho-cho Digital Museum</p>
+                            <h1 class="text-sm sm:text-base md:text-xl font-bold text-gray-900 serif-heading">里庄町歴史民俗資料館<span class="hidden md:inline">デジタルミュージアム</span></h1>
+                            <p class="text-xs text-gray-600 hidden sm:block">Satosho-cho Digital Museum</p>
                         </div>
                     </a>
                 </div>
                 
-                <nav class="hidden lg:flex items-center space-x-8">
-                    <a href="index.html" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-all hover:scale-110">ホームに戻る</a>
+                <nav class="flex items-center">
+                    <a href="index.html" class="text-sm sm:text-base text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-all hover:scale-110">ホームに戻る</a>
+                </nav>
             </div>
         </div>
     </header>
     
     <!-- 施設案内セクション -->
-    <section id="facilities" class="py-20 bg-gray-50">
+    <section id="facilities" class="pt-24 sm:pt-28 pb-10 sm:pb-20 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 serif-heading gradient-text">施設案内</h2>
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 serif-heading gradient-text">施設案内</h2>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12">
                 <!-- 館内マップ -->
-                <div class="bg-white rounded-2xl p-8 custom-shadow-lg reveal">
-                    <h3 class="text-2xl font-bold mb-6 serif-heading">館内マップ</h3>
-                    <img src="subff1.jpeg" alt="館内マップ" class="w-full rounded-lg mb-6">
+                <div class="bg-white rounded-2xl p-4 sm:p-8 custom-shadow-lg reveal">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 serif-heading">館内マップ</h3>
+                    <img src="subff1.jpeg" alt="館内マップ" class="w-full rounded-lg mb-4 sm:mb-6">
                 </div>
                 
                 <!-- 設備情報 -->
-                <div class="bg-white rounded-2xl p-8 custom-shadow-lg reveal">
-                    <h3 class="text-2xl font-bold mb-6 serif-heading">館内情報</h3>
-                    <div class="space-y-6">
+                <div class="bg-white rounded-2xl p-4 sm:p-8 custom-shadow-lg reveal">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 serif-heading">館内情報</h3>
+                    <div class="space-y-4 sm:space-y-6">
                         <div class="flex items-start">
-                            <i class="text-2xl text-blue-600 mr-4 mt-1"></i>
+                            <i class="text-xl sm:text-2xl text-blue-600 mr-3 sm:mr-4 mt-1"></i>
                             <div>
-                                <h4 class="font-bold mb-2">建物構造</h4>
-                                <p class="text-gray-600">鉄筋コンクリート</p>
+                                <h4 class="font-bold mb-1 sm:mb-2 text-sm sm:text-base">建物構造</h4>
+                                <p class="text-gray-600 text-xs sm:text-sm">鉄筋コンクリート</p>
                             </div>
                         </div>
                         <div class="flex items-start">
-                            <i class="text-2xl text-green-600 mr-4 mt-1"></i>
+                            <i class="text-xl sm:text-2xl text-green-600 mr-3 sm:mr-4 mt-1"></i>
                             <div>
-                                <h4 class="font-bold mb-2">敷地面積</h4>
-                                <p class="text-gray-600">3.280㎡</p>
+                                <h4 class="font-bold mb-1 sm:mb-2 text-sm sm:text-base">敷地面積</h4>
+                                <p class="text-gray-600 text-xs sm:text-sm">3.280㎡</p>
                             </div>
                         </div>
                         <div class="flex items-start">
-                            <i class="text-2xl text-amber-600 mr-4 mt-1"></i>
+                            <i class="text-xl sm:text-2xl text-amber-600 mr-3 sm:mr-4 mt-1"></i>
                             <div>
-                                <h4 class="font-bold mb-2">建物面積</h4>
-                                <p class="text-gray-600">356.51㎡</p>
+                                <h4 class="font-bold mb-1 sm:mb-2 text-sm sm:text-base">建物面積</h4>
+                                <p class="text-gray-600 text-xs sm:text-sm">356.51㎡</p>
                             </div>
                         </div>
                         <div class="flex items-start">
-                            <i class="text-2xl text-purple-600 mr-4 mt-1"></i>
+                            <i class="text-xl sm:text-2xl text-purple-600 mr-3 sm:mr-4 mt-1"></i>
                             <div>
-                                <h4 class="font-bold mb-2">延べ面積</h4>
-                                <p class="text-gray-600">348.81㎡</p>
+                                <h4 class="font-bold mb-1 sm:mb-2 text-sm sm:text-base">延べ面積</h4>
+                                <p class="text-gray-600 text-xs sm:text-sm">348.81㎡</p>
                             </div>
                         </div>
                         <div class="flex items-start">
-                            <i class="text-2xl text-pink-600 mr-4 mt-1"></i>
+                            <i class="text-xl sm:text-2xl text-pink-600 mr-3 sm:mr-4 mt-1"></i>
                             <div>
-                                <h4 class="font-bold mb-2">展示室</h4>
-                                <p class="text-gray-600">163.42㎡</p>
+                                <h4 class="font-bold mb-1 sm:mb-2 text-sm sm:text-base">展示室</h4>
+                                <p class="text-gray-600 text-xs sm:text-sm">163.42㎡</p>
                             </div>
                         </div>
                         <div class="flex items-start">
-                            <i class="text-2xl text-pink-600 mr-4 mt-1"></i>
+                            <i class="text-xl sm:text-2xl text-pink-600 mr-3 sm:mr-4 mt-1"></i>
                             <div>
-                                <h4 class="font-bold mb-2">不明</h4>
-                                <p class="text-gray-600">42.01㎡</p>
+                                <h4 class="font-bold mb-1 sm:mb-2 text-sm sm:text-base">不明</h4>
+                                <p class="text-gray-600 text-xs sm:text-sm">42.01㎡</p>
                             </div>
                         </div>
                         <div class="flex items-start">
-                            <i class="text-2xl text-pink-600 mr-4 mt-1"></i>
+                            <i class="text-xl sm:text-2xl text-pink-600 mr-3 sm:mr-4 mt-1"></i>
                             <div>
-                                <h4 class="font-bold mb-2">くん○室</h4>
-                                <p class="text-gray-600">14.12㎡</p>
+                                <h4 class="font-bold mb-1 sm:mb-2 text-sm sm:text-base">くん○室</h4>
+                                <p class="text-gray-600 text-xs sm:text-sm">14.12㎡</p>
                             </div>
                         </div>
                         <div class="flex items-start">
-                            <i class="text-2xl text-pink-600 mr-4 mt-1"></i>
+                            <i class="text-xl sm:text-2xl text-pink-600 mr-3 sm:mr-4 mt-1"></i>
                             <div>
-                                <h4 class="font-bold mb-2">事務室</h4>
-                                <p class="text-gray-600">45.60㎡</p>
+                                <h4 class="font-bold mb-1 sm:mb-2 text-sm sm:text-base">事務室</h4>
+                                <p class="text-gray-600 text-xs sm:text-sm">45.60㎡</p>
                             </div>
                         </div>
                     </div>
@@ -256,13 +287,13 @@
     </section>
     
     <!-- アクセス情報セクション -->
-    <section id="access" class="py-20 bg-white">
+    <section id="access" class="py-10 sm:py-20 bg-white">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 serif-heading gradient-text">アクセス</h2>
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 serif-heading gradient-text">アクセス</h2>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12">
                 <!-- 地図 -->
                 <div class="reveal">
                     <div class="map-container rounded-2xl overflow-hidden custom-shadow-lg">
@@ -277,26 +308,26 @@
                 
                 <!-- アクセス詳細 -->
                 <div class="reveal">
-                    <div class="bg-gray-50 rounded-2xl p-8 custom-shadow-lg">
-                        <h3 class="text-2xl font-bold mb-6 serif-heading">アクセス情報</h3>
+                    <div class="bg-gray-50 rounded-2xl p-4 sm:p-8 custom-shadow-lg">
+                        <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 serif-heading">アクセス情報</h3>
                         
-                        <div class="mb-8">
-                            <h4 class="font-bold mb-3 text-lg">所在地</h4>
-                            <p class="text-gray-700">〒719-0302</p>
-                            <p class="text-gray-700">岡山県浅口郡里庄町新庄2405</p>
-                            <p class="text-gray-700">山陽本線里庄駅下車 徒歩10分</p>
+                        <div class="mb-6 sm:mb-8">
+                            <h4 class="font-bold mb-2 sm:mb-3 text-base sm:text-lg">所在地</h4>
+                            <p class="text-gray-700 text-sm sm:text-base">〒719-0302</p>
+                            <p class="text-gray-700 text-sm sm:text-base">岡山県浅口郡里庄町新庄2405</p>
+                            <p class="text-gray-700 text-sm sm:text-base">山陽本線里庄駅下車 徒歩10分</p>
                         </div>
                         
-                        <div class="mb-8">
-                            <h4 class="font-bold mb-3 text-lg">お車でお越しの方</h4>
+                        <div class="mb-6 sm:mb-8">
+                            <h4 class="font-bold mb-2 sm:mb-3 text-base sm:text-lg">お車でお越しの方</h4>
                             <ul class="space-y-2 text-gray-700">
                                 <li class="flex items-center">
-                                    <i class="fas fa-parking mr-3 text-blue-600"></i>
-                                    <span>専用駐車場完備</span>
+                                    <i class="fas fa-parking mr-2 sm:mr-3 text-blue-600"></i>
+                                    <span class="text-sm sm:text-base">専用駐車場完備</span>
                                 </li>
                                 <li class="flex items-center">
-                                    <i class="fas fa-yen-sign mr-3 text-green-600"></i>
-                                    <span>駐車料金：なし</span>
+                                    <i class="fas fa-yen-sign mr-2 sm:mr-3 text-green-600"></i>
+                                    <span class="text-sm sm:text-base">駐車料金：なし</span>
                                 </li>
                             </ul>
                         </div>
@@ -307,19 +338,19 @@
     </section>
     
     <!-- 料金・開館情報セクション -->
-    <section id="pricing" class="py-20 bg-gray-50">
+    <section id="pricing" class="py-10 sm:py-20 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 serif-heading gradient-text">料金・開館情報</h2>
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 serif-heading gradient-text">料金・開館情報</h2>
             </div>
             
             <!-- 開館情報 -->
-            <div class="max-w-4xl mx-auto mb-16">
-                <div class="bg-white rounded-2xl p-8 custom-shadow-lg reveal">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="max-w-4xl mx-auto mb-10 sm:mb-16">
+                <div class="bg-white rounded-2xl p-4 sm:p-8 custom-shadow-lg reveal">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                         <div>
-                            <h4 class="font-bold mb-4 text-lg">開館時間</h4>
-                            <table class="w-full timetable">
+                            <h4 class="font-bold mb-3 sm:mb-4 text-base sm:text-lg">開館時間</h4>
+                            <table class="w-full timetable text-sm sm:text-base">
                                 <tr>
                                     <td class="font-semibold">開館時間</td>
                                     <td>9:00 - 16:00</td>
@@ -327,17 +358,17 @@
                             </table>
                         </div>
                         <div>
-                            <h4 class="font-bold mb-4 text-lg">開館日</h4>
-                            <ul class="space-y-2 text-gray-700">
+                            <h4 class="font-bold mb-3 sm:mb-4 text-base sm:text-lg">開館日</h4>
+                            <ul class="space-y-2 text-gray-700 text-sm sm:text-base">
                                 <li class="flex items-center">
-                                    <i class="r-times mr-3 text-red-600"></i>
+                                    <i class="r-times mr-2 sm:mr-3 text-red-600"></i>
                                     <span>第1・第３日曜日</span>
                                 </li>
                             </ul>
-                            <h4 class="font-bold mb-4 text-lg">料金案内</h4>
-                            <ul class="space-y-2 text-gray-700">
+                            <h4 class="font-bold mb-3 sm:mb-4 text-base sm:text-lg mt-4 sm:mt-6">料金案内</h4>
+                            <ul class="space-y-2 text-gray-700 text-sm sm:text-base">
                                 <li class="flex items-center">
-                                    <i class="r-times mr-3 text-red-600"></i>
+                                    <i class="r-times mr-2 sm:mr-3 text-red-600"></i>
                                     <span>入場料：無料</span>
                                 </li>
                             </ul>
@@ -345,74 +376,75 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
     
     <!-- コンタクトセクション -->
-    <section id="contact" class="py-20 bg-white">
+    <section id="contact" class="py-10 sm:py-20 bg-white">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 serif-heading gradient-text">お問い合わせ</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 serif-heading gradient-text">お問い合わせ</h2>
+                <p class="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto">
                     ご不明な点は、お気軽にお問い合わせください
                 </p>
             </div>
             
            <div class="max-w-5xl mx-auto">
-  <div class="flex justify-center">
-    <!-- お問い合わせ情報 -->
-    <div class="bg-gray-50 rounded-2xl p-8 custom-shadow-lg reveal max-w-2xl w-full">
-      <h3 class="text-2xl font-bold mb-6 serif-heading text-center">お問い合わせ先</h3>
-      <div class="space-y-6">
-        <div class="flex items-start">
-          <i class="fas fa-phone text-2xl text-blue-600 mr-4 mt-1"></i>
-          <div>
-            <h4 class="font-bold mb-2">お電話でのお問い合わせ</h4>
-            <p class="text-xl font-bold text-blue-600 mb-1">歴史民俗資料館　0865-64-5465(開館日のみ)</p>
-            <p class="text-xl font-bold text-blue-600 mb-1">里庄町教育委員会　0865-64-7212</p>
-            <p class="text-gray-600">受付時間：9:00-17:00</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+              <div class="flex justify-center">
+                <!-- お問い合わせ情報 -->
+                <div class="bg-gray-50 rounded-2xl p-4 sm:p-8 custom-shadow-lg reveal max-w-2xl w-full">
+                  <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 serif-heading text-center">お問い合わせ先</h3>
+                  <div class="space-y-4 sm:space-y-6">
+                    <div class="flex items-start">
+                      <i class="fas fa-phone text-xl sm:text-2xl text-blue-600 mr-3 sm:mr-4 mt-1"></i>
+                      <div>
+                        <h4 class="font-bold mb-1 sm:mb-2 text-sm sm:text-base">お電話でのお問い合わせ</h4>
+                        <p class="text-lg sm:text-xl font-bold text-blue-600 mb-1 break-words">歴史民俗資料館　0865-64-5465<span class="text-xs sm:text-sm font-normal">(開館日のみ)</span></p>
+                        <p class="text-lg sm:text-xl font-bold text-blue-600 mb-1 break-words">里庄町教育委員会　0865-64-7212</p>
+                        <p class="text-gray-600 text-xs sm:text-sm">受付時間：9:00-17:00</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
     </section>
     
     <!-- フッター -->
     <footer class="bg-gray-900 text-gray-300">
-        <div class="container mx-auto px-4 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="container mx-auto px-4 py-8 sm:py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-landmark text-3xl text-blue-500 mr-3"></i>
+                        <i class="fas fa-landmark text-2xl sm:text-3xl text-blue-500 mr-2 sm:mr-3"></i>
                         <div>
-                            <h3 class="text-white font-bold text-xl serif-heading">里庄町歴史民俗資料館デジタルミュージアム</h3>
-                            <p class="text-sm">Satosho-cho Digital Museum</p>
+                            <h3 class="text-white font-bold text-base sm:text-xl serif-heading">里庄町歴史民俗資料館<span class="hidden sm:inline">デジタルミュージアム</span></h3>
+                            <p class="text-xs sm:text-sm">Satosho-cho Digital Museum</p>
                         </div>
                     </div>
-                    <p class="mb-4 text-gray-400">
+                    <p class="mb-4 text-gray-400 text-xs sm:text-sm">
                        里庄町歴史民俗資料館のデジタルミュージアムは、最新技術を駆使して文化遺産を保存・公開しています。
                     </p>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-twitter text-xl"></i>
+                            <i class="fab fa-twitter text-lg sm:text-xl"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-facebook-f text-xl"></i>
+                            <i class="fab fa-facebook-f text-lg sm:text-xl"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-instagram text-xl"></i>
+                            <i class="fab fa-instagram text-lg sm:text-xl"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-youtube text-xl"></i>
+                            <i class="fab fa-youtube text-lg sm:text-xl"></i>
                         </a>
                     </div>
                 </div>
                 
                 <div>
-                    <h4 class="text-white font-semibold mb-4">クイックリンク</h4>
-                    <ul class="space-y-2">
+                    <h4 class="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">クイックリンク</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm">
                         <li><a href="#facilities" class="hover:text-white transition-colors">施設案内</a></li>
                         <li><a href="#access" class="hover:text-white transition-colors">アクセス</a></li>
                         <li><a href="#pricing" class="hover:text-white transition-colors">料金案内</a></li>
@@ -422,21 +454,21 @@
                 </div>
                 
                 <div>
-                    <h4 class="text-white font-semibold mb-4">開館時間</h4>
-                    <ul class="space-y-2">
+                    <h4 class="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">開館時間</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm">
                         <li>第１・第３日曜日</li>
                         <li>9:00〜16:00</li>
                     </ul>
                     <div class="mt-4">
-                        <p class="font-semibold mb-2">お問い合わせ</p>
-                        <p>TEL(歴史民俗資料館): 0865-64-5465(開館日のみ)</p>
-                        <p>TEL(里庄町教育委員会): 0865-64-7212</p>
+                        <p class="font-semibold mb-2 text-xs sm:text-sm">お問い合わせ</p>
+                        <p class="text-xs sm:text-sm">TEL(歴史民俗資料館): <br class="sm:hidden">0865-64-5465(開館日のみ)</p>
+                        <p class="text-xs sm:text-sm">TEL(里庄町教育委員会): <br class="sm:hidden">0865-64-7212</p>
                     </div>
                 </div>
             </div>
             
-            <div class="mt-12 pt-8 border-t border-gray-800 text-center">
-                <p>&copy; 2025 里庄町歴史民俗資料館デジタルミュージアム by katsujiRingX. All rights reserved.</p>
+            <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800 text-center">
+                <p class="text-xs sm:text-sm">&copy; 2025 里庄町歴史民俗資料館デジタルミュージアム by katsujiRingX. All rights reserved.</p>
             </div>
         </div>
     </footer>

@@ -84,7 +84,7 @@
         .hero-slider {
             position: relative;
             width: 100%;
-            height: 550px;
+            height: 450px;
             overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
@@ -232,10 +232,51 @@
             transform: rotate(-30deg);
         }
         
+        /* スマホ表示の改善 */
+        @media (max-width: 640px) {
+            body {
+                overflow-x: hidden;
+            }
+            
+            h1, h2, h3, h4, h5, h6, p, li, a {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+            }
+            
+            .text-3xl {
+                font-size: 1.5rem;
+            }
+            
+            .text-4xl {
+                font-size: 1.75rem;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .card p {
+                font-size: 0.875rem;
+                line-height: 1.4;
+            }
+            
+            .card li {
+                margin-bottom: 0.25rem;
+                font-size: 0.875rem;
+            }
+            
+            .slider-content {
+                left: 20px;
+                right: 20px;
+                bottom: 40px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .hero-slider {
-                width: 100%;
-                height: 500px;
+                height: 400px;
             }
             
             .image-composition {
@@ -417,14 +458,14 @@
     <!-- ヘッダー -->
     <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center justify-between h-16 sm:h-20">
                 <!-- ロゴ -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <a href="/" class="flex items-center">
-                            <i class="fas fa-museum text-3xl text-blue-700 mr-3"></i>
+                            <i class="fas fa-museum text-2xl sm:text-3xl text-blue-700 mr-2 sm:mr-3"></i>
                             <div>
-                                <h1 class="text-xl font-bold text-gray-900">里庄町歴史民俗資料館デジタルミュージアム</h1>
+                                <h1 class="text-sm sm:text-base md:text-xl font-bold text-gray-900">里庄町史民俗資料館<span class="hidden md:inline">デジタルミュージアム</span></h1>
                                 <p class="text-xs text-gray-600 hidden sm:block">Satosho-cho Digital Museum</p>
                             </div>
                         </a>
@@ -486,7 +527,7 @@
     </header>
     
     <!-- メインコンテンツ -->
-    <main id="main-content" class="pt-20">
+    <main id="main-content" class="pt-16 sm:pt-20">
         <!-- 改善されたヒーローセクション -->
         <section class="relative">
             <!-- スライダー -->
@@ -519,15 +560,15 @@
         </section>
         
         <!-- 改善された資料館紹介セクション -->
-        <section class="py-20" style="background: linear-gradient(135deg, #fce7f3 0%, #e0e7ff 100%);">
+        <section class="py-12 sm:py-20" style="background: linear-gradient(135deg, #fce7f3 0%, #e0e7ff 100%);">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center text-gray-800">里庄町歴史民俗資料館デジタルミュージアム</h2>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 sm:mb-16 text-center text-gray-800">里庄町歴史民俗資料館デジタルミュージアム</h2>
                 
                 <!-- 2枚の画像のオシャレな配置 -->
-                <div class="image-composition mb-16">
+                <div class="image-composition mb-10 sm:mb-16">
                     <!-- 装飾要素 -->
-                    <div class="image-accent accent-1"></div>
-                    <div class="image-accent accent-2"></div>
+                    <div class="image-accent accent-1 hidden sm:block"></div>
+                    <div class="image-accent accent-2 hidden sm:block"></div>
                     
                     <!-- メイン画像1 -->
                     <div class="intro-image intro-image-1 float-animation">
@@ -541,13 +582,12 @@
                 </div>
                 
                 <!-- 紹介文 -->
-                <div class="max-w-4xl mx-auto ">
-                    <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                <div class="max-w-4xl mx-auto">
+                    <p class="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
                         里庄町歴史民俗資料館で所蔵・展示している貴重な資料等をWeb上で閲覧することができるデジタルミュージアムです。
                         他言語対応やバーチャルツアー機能を実装し、より多くの方に里庄町歴史民俗資料館の魅力を発信しています。
-                        <br>
                     </p>
-                    <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    <p class="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 leading-relaxed">
                        里庄町歴史民俗資料館の所蔵資料をご自宅等でもご覧いただけるよう、デジタルアーカイブを進めています。
                     </p>
                 </div>
@@ -555,34 +595,33 @@
         </section>
         
         <!-- 特集展示 -->
-        <section id="exhibitions" class="py-16 bg-gray-50">
+        <section id="exhibitions" class="py-12 sm:py-16 bg-gray-50">
             <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">注目の展示</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">注目の展示</h2>
+                    <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
                         里庄町歴史民俗資料館の展示を通じて、地域の歴史や文化を深く理解することができます。
-                        <br>
                         デジタル技術を駆使した展示で、より多くの方に里庄町歴史民俗資料館の魅力を発信します。
                     </p>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
                     <!-- フィーチャーカード1 -->
                     <div class="card rounded-xl overflow-hidden group">
-                        <div class="relative h-64 overflow-hidden">
+                        <div class="relative h-48 sm:h-64 overflow-hidden">
                             <img src="ここに画像入れる" alt="バーチャルツアー" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <span class="bg-blue-600 text-xs px-2 py-1 rounded-full">歴史資料館バーチャルツアー</span>
-                                <h3 class="text-xl font-bold mt-2">準備中</h3>
+                                <h3 class="text-lg sm:text-xl font-bold mt-2">準備中</h3>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <p class="text-gray-600 mb-4">
+                        <div class="p-4 sm:p-6">
+                            <p class="text-sm sm:text-base text-gray-600 mb-4">
                                 里庄町歴史民俗資料館をバーチャル体験できます。
                             </p>
                             <div class="flex items-center justify-between">
-                                <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">
+                                <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold text-sm sm:text-base">
                                     詳細を見る
                                     <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
@@ -592,20 +631,20 @@
                     
                     <!-- フィーチャーカード2 -->
                     <div class="card rounded-xl overflow-hidden group">
-                        <div class="relative h-64 overflow-hidden">
+                        <div class="relative h-48 sm:h-64 overflow-hidden">
                             <img src="ここに画像入れる" alt="3Dコレクション" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <span class="bg-green-600 text-xs px-2 py-1 rounded-full">3Dコンテンツ</span>
-                                <h3 class="text-xl font-bold mt-2">3Dコレクション</h3>
+                                <h3 class="text-lg sm:text-xl font-bold mt-2">3Dコレクション</h3>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <p class="text-gray-600 mb-4">
+                        <div class="p-4 sm:p-6">
+                            <p class="text-sm sm:text-base text-gray-600 mb-4">
                                 360度自由に鑑賞できるデジタルアーカイブ。
                             </p>
                             <div class="flex items-center justify-between">
-                                <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">
+                                <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold text-sm sm:text-base">
                                     詳細を見る
                                     <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
@@ -615,20 +654,20 @@
                     
                     <!-- フィーチャーカード3 -->
                     <div class="card rounded-xl overflow-hidden group">
-                        <div class="relative h-64 overflow-hidden">
+                        <div class="relative h-48 sm:h-64 overflow-hidden">
                             <img src="ここに画像入れる" alt="歴史資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <span class="bg-purple-600 text-xs px-2 py-1 rounded-full">資料</span>
-                                <h3 class="text-xl font-bold mt-2">歴史資料</h3>
+                                <h3 class="text-lg sm:text-xl font-bold mt-2">歴史資料</h3>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <p class="text-gray-600 mb-4">
+                        <div class="p-4 sm:p-6">
+                            <p class="text-sm sm:text-base text-gray-600 mb-4">
                                 読み解くことが難しい歴史的資料をわかりやすく解説しています。
                             </p>
                             <div class="flex items-center justify-between">
-                                <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">
+                                <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold text-sm sm:text-base">
                                     詳細を見る
                                     <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
@@ -640,47 +679,47 @@
         </section>
         
         <!-- 当館の特徴セクション -->
-        <section class="py-16 bg-white">
+        <section class="py-12 sm:py-16 bg-white">
             <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
                     <div>
-                        <h2 class="text-3xl md:text-4xl font-bold mb-6">里庄町の歴史民俗資料館を<ul>世界へ発信</ul></h2>
-                        <p class="text-gray-600 mb-8">
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">里庄町の歴史民俗資料館を<br class="sm:hidden">世界へ発信</h2>
+                        <p class="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
                             私たちは、里庄町歴史民俗資料館の貴重な文化遺産を最新技術でデジタル化し、
                             世界中の人々が自由にアクセスできる環境を提供しています。
                             歴史的な価値を未来へ継承する架け橋として活動しています。
                         </p>
                         <div class="space-y-4">
                             <div class="flex items-start">
-                                <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
                                     <i class="fas fa-globe-asia text-blue-600"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold mb-1">世界へ向けた発信</h3>
-                                    <p class="text-gray-600 text-sm">多言語対応を強化し、グローバルプラットフォームへ成長。</p>
+                                    <h3 class="font-semibold text-sm sm:text-base mb-1">世界へ向けた発信</h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm">多言語対応を強化し、グローバルプラットフォームへ成長。</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
                                     <i class="fas fa-graduation-cap text-green-600"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold mb-1">教育プログラム</h3>
-                                    <p class="text-gray-600 text-sm">学校・研究機関との連携による次世代教育</p>
+                                    <h3 class="font-semibold text-sm sm:text-base mb-1">教育プログラム</h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm">学校・研究機関との連携による次世代教育</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
                                     <i class="fas fa-handshake text-purple-600"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold mb-1">地域との連携</h3>
-                                    <p class="text-gray-600 text-sm">地域の方々と密着した取り組み</p>
+                                    <h3 class="font-semibold text-sm sm:text-base mb-1">地域との連携</h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm">地域の方々と密着した取り組み</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="relative">
+                    <div class="relative mt-6 lg:mt-0">
                         <img src="mainff1.jpeg" alt="写真１" class="rounded-lg shadow-2xl">
                     </div>
                 </div>
@@ -688,40 +727,40 @@
         </section>
         
         <!-- ニュースセクション -->
-        <section class="py-16 bg-gray-50">
+        <section class="py-12 sm:py-16 bg-gray-50">
             <div class="container mx-auto px-4">
-                <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-3xl font-bold">最新情報</h2>
-                    <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold hidden md:inline-flex items-center">
+                <div class="flex justify-between items-center mb-6 sm:mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-bold">最新情報</h2>
+                    <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold hidden md:inline-flex items-center text-sm sm:text-base">
                         すべて見る
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <article class="card rounded-lg overflow-hidden">
-                        <img src="mainff2.jpeg" alt="写真１" class="w-full h-48 object-cover">
-                        <div class="p-6">
+                        <img src="mainff2.jpeg" alt="写真１" class="w-full h-40 sm:h-48 object-cover">
+                        <div class="p-4 sm:p-6">
                             <span class="text-xs text-blue-600 font-semibold">イベント</span>
-                            <h3 class="text-xl font-bold mt-2 mb-2">令和７年度　里庄町歴史講座</h3>
-                            <p class="text-gray-600 text-sm mb-4">小川郷太郎の人生-グローバルな学びと政治への貢献-
-                                <li>講師：鎮西学院大学経済政策学科(教授)　吉野浩司氏</li>
-                                <li>日時：2025年6月23日（月）13:30〜14:30</li>
-                                <li>場所：里庄総合文化ホール「フロイデ」大ホール</li>
-                            </lu>
-                            </p>
-                            <time class="text-gray-500 text-sm">投稿日：2025年5月12日</time>
+                            <h3 class="text-lg sm:text-xl font-bold mt-2 mb-2">令和７年度　里庄町歴史講座</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 mb-2">小川郷太郎の人生-グローバルな学びと政治への貢献-</p>
+                            <ul class="text-xs sm:text-sm text-gray-600 mb-3 list-disc pl-5">
+                                <li class="mb-1">講師：鎮西学院大学経済政策学科(教授)　吉野浩司氏</li>
+                                <li class="mb-1">日時：2025年6月23日（月）13:30〜14:30</li>
+                                <li class="mb-1">場所：里庄総合文化ホール「フロイデ」大ホール</li>
+                            </ul>
+                            <time class="text-gray-500 text-xs">投稿日：2025年5月12日</time>
                         </div>
                     </article>
                     
                     <article class="card rounded-lg overflow-hidden">
-                        <img src="mainff5.png" alt="写真2" class="w-full h-48 object-cover">
-                        <div class="p-6">
+                        <img src="mainff5.png" alt="写真2" class="w-full h-40 sm:h-48 object-cover">
+                        <div class="p-4 sm:p-6">
                             <span class="text-xs text-orange-600 font-semibold">お知らせ</span>
-                            <h3 class="text-xl font-bold mt-2 mb-2">里庄町歴史民俗資料館デジタルミュージアムを作成しました</h3>
-                            <p class="text-gray-600 text-sm mb-4">里庄町歴史民俗資料館デジタルミュージアムを非公開リンクで公開しました。多くの方々に向けて、里庄町の歴史的・文化的資産の魅力を発信しています。
+                            <h3 class="text-lg sm:text-xl font-bold mt-2 mb-2">里庄町歴史民俗資料館デジタルミュージアムを作成しました</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 mb-4">里庄町歴史民俗資料館デジタルミュージアムを非公開リンクで公開しました。多くの方々に向けて、里庄町の歴史的・文化的資産の魅力を発信しています。
                             </p>
-                            <time class="text-gray-500 text-sm">投稿日：2025年5月12日</time>
+                            <time class="text-gray-500 text-xs">投稿日：2025年5月12日</time>
                         </div>
                     </article>
                 </div>
@@ -729,144 +768,144 @@
         </section>
 
         <!-- 資料検索スペシャルコンテンツ -->
-<section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">資料検索</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">
-                所蔵資料をキーワード、分野、ハッシュタグから検索できます。<br>
-                デジタル化された貴重な資料をお探しください。
-            </p>
-        </div>
-        
-        <!-- 検索フォーム -->
-        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-8 mb-10">
-            <form class="space-y-6">
-                <!-- キーワード検索 -->
-                <div>
-                    <label for="search-keyword" class="block text-sm font-medium text-gray-700 mb-2">キーワードから探す</label>
-                    <div class="flex">
-                        <input type="text" id="search-keyword" name="keyword" placeholder="検索キーワードを入力" 
-                            class="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-r-lg font-semibold transition-colors">
-                            <i class="fas fa-search mr-2"></i>検索
-                        </button>
-                    </div>
+        <section class="py-12 sm:py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">資料検索</h2>
+                    <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
+                        所蔵資料をキーワード、分野、ハッシュタグから検索できます。<br>
+                        デジタル化された貴重な資料をお探しください。
+                    </p>
                 </div>
                 
-                <!-- ハッシュタグ選択 -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">人気のハッシュタグから探す</label>
-                    <div class="flex flex-wrap gap-2">
-                        <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-4 py-2 rounded-full text-sm transition-colors">
-                            #江戸時代
-                        </button>
-                        <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-4 py-2 rounded-full text-sm transition-colors">
-                            #小川郷太郎
-                        </button>
-                        <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-4 py-2 rounded-full text-sm transition-colors">
-                            #伝統工芸
-                        </button>
-                        <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-4 py-2 rounded-full text-sm transition-colors">
-                            #古墳
-                        </button>
-                        <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-4 py-2 rounded-full text-sm transition-colors">
-                            #農具
-                        </button>
-                        <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-4 py-2 rounded-full text-sm transition-colors">
-                            #神社仏閣
-                        </button>
-                        <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-4 py-2 rounded-full text-sm transition-colors">
-                            #明治時代
-                        </button>
-                    </div>
+                <!-- 検索フォーム -->
+                <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-4 sm:p-8 mb-8 sm:mb-10">
+                    <form class="space-y-4 sm:space-y-6">
+                        <!-- キーワード検索 -->
+                        <div>
+                            <label for="search-keyword" class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">キーワードから探す</label>
+                            <div class="flex">
+                                <input type="text" id="search-keyword" name="keyword" placeholder="検索キーワードを入力" 
+                                    class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2 rounded-r-lg font-semibold transition-colors text-sm">
+                                    <i class="fas fa-search mr-2"></i>検索
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- ハッシュタグ選択 -->
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">人気のハッシュタグから探す</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors">
+                                    #江戸時代
+                                </button>
+                                <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors">
+                                    #小川郷太郎
+                                </button>
+                                <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors">
+                                    #伝統工芸
+                                </button>
+                                <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors">
+                                    #古墳
+                                </button>
+                                <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors">
+                                    #農具
+                                </button>
+                                <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors">
+                                    #神社仏閣
+                                </button>
+                                <button type="button" class="bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors">
+                                    #明治時代
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-        
-        <!-- 資料分野から探す -->
-        <h3 class="text-2xl font-bold mb-6 text-center">資料分野から探す</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- 民具資料 -->
-            <div class="card rounded-xl overflow-hidden group cursor-pointer">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="民具資料を貼る？？？" alt="民具資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 text-white">
-                        <h3 class="text-xl font-bold mt-2">民具資料</h3>
+                
+                <!-- 資料分野から探す -->
+                <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">資料分野から探す</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- 民具資料 -->
+                    <div class="card rounded-xl overflow-hidden group cursor-pointer">
+                        <div class="relative h-48 sm:h-64 overflow-hidden">
+                            <img src="民具資料を貼る？？？" alt="民具資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-lg sm:text-xl font-bold mt-2">民具資料</h3>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <p class="text-xs sm:text-sm text-gray-600 mb-4">
+                                里庄町の人々の暮らしを支えてきた生活道具や農機具など、民俗文化に関する資料を探せます。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+                                    このカテゴリで検索
+                                    <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="p-6">
-                    <p class="text-gray-600 mb-4">
-                        里庄町の人々の暮らしを支えてきた生活道具や農機具など、民俗文化に関する資料を探せます。
-                    </p>
-                    <div class="flex items-center justify-between">
-                        <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">
-                            このカテゴリで検索
-                            <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
+                    
+                    <!-- 考古資料 -->
+                    <div class="card rounded-xl overflow-hidden group cursor-pointer">
+                        <div class="relative h-48 sm:h-64 overflow-hidden">
+                            <img src="考古資料の３Dか何かを貼る？？？" alt="考古資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-lg sm:text-xl font-bold mt-2">考古資料</h3>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <p class="text-xs sm:text-sm text-gray-600 mb-4">
+                               ３Dコレクションです。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+                                    このカテゴリで検索
+                                    <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 歴史資料 -->
+                    <div class="card rounded-xl overflow-hidden group cursor-pointer">
+                        <div class="relative h-48 sm:h-64 overflow-hidden">
+                            <img src="歴史資料の画像を載せる" alt="歴史資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-lg sm:text-xl font-bold mt-2">歴史資料</h3>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <p class="text-xs sm:text-sm text-gray-600 mb-4">
+                                古文書など、郷土の偉人に関わる品々など、里庄町の歴史を物語る貴重な資料を閲覧できます。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+                                    このカテゴリで検索
+                                    <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- 考古資料 -->
-            <div class="card rounded-xl overflow-hidden group cursor-pointer">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="考古資料の３Dか何かを貼る？？？" alt="考古資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 text-white">
-                        <h3 class="text-xl font-bold mt-2">考古資料</h3>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <p class="text-gray-600 mb-4">
-                       ３Dコレクションです。
-                    </p>
-                    <div class="flex items-center justify-between">
-                        <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">
-                            このカテゴリで検索
-                            <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 歴史資料 -->
-            <div class="card rounded-xl overflow-hidden group cursor-pointer">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="歴史資料の画像を載せる" alt="歴史資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 text-white">
-                        <h3 class="text-xl font-bold mt-2">歴史資料</h3>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <p class="text-gray-600 mb-4">
-                        古文書など、郷土の偉人に関わる品々など、里庄町の歴史を物語る貴重な資料を閲覧できます。
-                    </p>
-                    <div class="flex items-center justify-between">
-                        <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">
-                            このカテゴリで検索
-                            <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
    
         
         <!-- パートナーセクション -->
-        <section class="py-16 bg-white">
+        <section class="py-10 sm:py-16 bg-white">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-12">提携機関・スポンサー</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">提携機関・スポンサー</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 sm:gap-8 items-center">
                     <div class="flex items-center justify-center p-4">
-                        <img src="katsujiRingX.png" alt="katsujiRingX技術サポート" class="h-12 object-contain filter grayscale hover:grayscale-0 transition-all">
+                        <img src="katsujiRingX.png" alt="katsujiRingX技術サポート" class="h-8 sm:h-12 object-contain filter grayscale hover:grayscale-0 transition-all">
                     </div>
                     <div class="flex items-center justify-center p-4">
-                        <img src="KatsujiX.png" alt="katsujiRingX技術サポート" class="h-12 object-contain filter grayscale hover:grayscale-0 transition-all">
+                        <img src="KatsujiX.png" alt="katsujiRingX技術サポート" class="h-8 sm:h-12 object-contain filter grayscale hover:grayscale-0 transition-all">
                     </div>
                 </div>
             </div>
@@ -875,41 +914,40 @@
     
     <!-- フッター -->
     <footer class="bg-gray-900 text-gray-300">
-        <div class="container mx-auto px-4 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="container mx-auto px-4 py-10 sm:py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                 <!-- ブランド情報 -->
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-museum text-2xl text-blue-500 mr-3"></i>
+                        <i class="fas fa-museum text-xl sm:text-2xl text-blue-500 mr-3"></i>
                         <div>
-                            <h3 class="text-white font-bold">里庄町歴史民俗資料館デジタルミュージアム</h3>
-                            <p class="text-sm">Satosho-cho Digital Museum</p>
+                            <h3 class="text-white text-sm sm:text-base font-bold">里庄町歴史民俗資料館デジタルミュージアム</h3>
+                            <p class="text-xs sm:text-sm">Satosho-cho Digital Museum</p>
                         </div>
                     </div>
-                    <p class="mb-4 text-sm">
+                    <p class="mb-4 text-xs sm:text-sm">
                         里庄町歴史民俗資料館のデジタルミュージアムは、最新技術を駆使して文化遺産を保存・公開しています。
-                        <br>
                     </p>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-facebook-f text-xl"></i>
+                            <i class="fab fa-facebook-f text-lg sm:text-xl"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-twitter text-xl"></i>
+                            <i class="fab fa-twitter text-lg sm:text-xl"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-instagram text-xl"></i>
+                            <i class="fab fa-instagram text-lg sm:text-xl"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-youtube text-xl"></i>
+                            <i class="fab fa-youtube text-lg sm:text-xl"></i>
                         </a>
                     </div>
                 </div>
                 
                 <!-- リンク列1 -->
                 <div>
-                    <h4 class="text-white font-semibold mb-4">展示・コレクション</h4>
-                    <ul class="space-y-2 text-sm">
+                    <h4 class="text-white text-sm sm:text-base font-semibold mb-4">展示・コレクション</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm">
                         <li><a href="#" class="hover:text-white transition-colors">常設展示</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">特別展示</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">3Dコレクション</a></li>
@@ -920,24 +958,21 @@
                 
                 <!-- リンク列2 -->
                 <div>
-                    <h4 class="text-white font-semibold mb-4">サービス・サポート</h4>
-                    <ul class="space-y-2 text-sm">
+                    <h4 class="text-white text-sm sm:text-base font-semibold mb-4">サービス・サポート</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm">
                         <li><a href="#" class="hover:text-white transition-colors">利用案内</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">団体予約</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">教育プログラム</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">研究者向けサービス</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">よくある質問</a></li>
                     </ul>
                 </div>
             </div>
             
             <!-- 下部情報 -->
-            <div class="mt-12 pt-8 border-t border-gray-800">
+            <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="text-sm mb-4 md:mb-0">
+                    <div class="text-xs sm:text-sm mb-4 md:mb-0">
                         &copy; 2025 里庄町歴史民俗資料館デジタルミュージアム by katsujiRingX. All rights reserved.
                     </div>
-                    <div class="flex flex-wrap gap-4 text-sm">
+                    <div class="flex flex-wrap gap-4 text-xs sm:text-sm">
                         <a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a>
                         <a href="#" class="hover:text-white transition-colors">利用規約</a>
                         <a href="#" class="hover:text-white transition-colors">アクセシビリティ</a>
@@ -948,90 +983,82 @@
         </div>
     </footer>
     
-   
-    
-    <!-- チャットウィジェット -->
-    <div class="fixed bottom-6 right-6 z-40">
-        <button onclick="toggleChat()" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg transition-all transform hover:scale-110">
-            <i class="fas fa-comment-dots text-xl"></i>
-        </button>
-    </div>
-    
     <!-- JavaScript -->
     <script>
         // ローディング画面の制御
        window.addEventListener('load', () => {
-    const loadingScreen = document.getElementById('loadingScreen');
-    setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 500);
-    }, 1000);
-    
-    // スライダーの初期化も追加
-    initSlider();
-});
-// スライダー機能
-let slideIndex = 1;
-let slideInterval;
+            const loadingScreen = document.getElementById('loadingScreen');
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 1000);
+            
+            // スライダーの初期化も追加
+            initSlider();
+        });
+        
+        // スライダー機能
+        let slideIndex = 1;
+        let slideInterval;
 
-// 特定のスライドを表示
-function currentSlide(n) {
-    showSlide(slideIndex = n);
-}
+        // 特定のスライドを表示
+        function currentSlide(n) {
+            showSlide(slideIndex = n);
+        }
 
-// スライドを表示
-function showSlide(n) {
-    let slides = document.getElementsByClassName("slide");
-    let dots = document.getElementsByClassName("dot");
-    
-    if (n > slides.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = slides.length}
-    
-    // すべてのスライドを非表示にする
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].classList.remove('active');
-    }
-    
-    // すべてのドットを非アクティブにする
-    for (let i = 0; i < dots.length; i++) {
-        dots[i].classList.remove('active');
-    }
-    
-    // 現在のスライドを表示し、対応するドットをアクティブにする
-    slides[slideIndex - 1].classList.add('active');
-    dots[slideIndex - 1].classList.add('active');
-}
+        // スライドを表示
+        function showSlide(n) {
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+            
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            // すべてのスライドを非表示にする
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+            }
+            
+            // すべてのドットを非アクティブにする
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].classList.remove('active');
+            }
+            
+            // 現在のスライドを表示し、対応するドットをアクティブにする
+            slides[slideIndex - 1].classList.add('active');
+            dots[slideIndex - 1].classList.add('active');
+        }
 
-// 次のスライドに移動
-function nextSlide() {
-    showSlide(slideIndex += 1);
-}
+        // 次のスライドに移動
+        function nextSlide() {
+            showSlide(slideIndex += 1);
+        }
 
-// 自動スライド機能
-function startAutoSlide() {
-    slideInterval = setInterval(nextSlide, 5000); // 5秒ごとに次のスライドへ
-}
+        // 自動スライド機能
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 5000); // 5秒ごとに次のスライドへ
+        }
 
-// 自動スライドを停止
-function stopAutoSlide() {
-    clearInterval(slideInterval);
-}
+        // 自動スライドを停止
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
 
-// スライダーの初期化
-function initSlider() {
-    showSlide(slideIndex);
-    startAutoSlide();
-    
-    // スライダーセクションにマウスが入ったら自動スライドを停止
-    const sliderSection = document.querySelector('.hero-slider');
-    sliderSection.addEventListener('mouseenter', stopAutoSlide);
-    sliderSection.addEventListener('mouseleave', startAutoSlide);
-}
+        // スライダーの初期化
+        function initSlider() {
+            showSlide(slideIndex);
+            startAutoSlide();
+            
+            // スライダーセクションにマウスが入ったら自動スライドを停止
+            const sliderSection = document.querySelector('.hero-slider');
+            sliderSection.addEventListener('mouseenter', stopAutoSlide);
+            sliderSection.addEventListener('mouseleave', startAutoSlide);
+        }
 
-// ページ読み込み時にスライダーを初期化
-window.addEventListener('load', initSlider);
+        // ページ読み込み時にスライダーを初期化
+        window.addEventListener('load', initSlider);
         
         // スクロールプログレスバー
         window.addEventListener('scroll', () => {
@@ -1115,11 +1142,6 @@ window.addEventListener('load', initSlider);
         }
         
         animateCounters();
-        
-        // チャットウィジェット（プレースホルダー）
-        function toggleChat() {
-            alert('チャットサポートは準備中です。お問い合わせフォームをご利用ください。');
-        }
         
         // パララックス効果
         window.addEventListener('scroll', () => {
