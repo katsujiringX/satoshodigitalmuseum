@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="里庄町歴史民俗資料館が所蔵する全ての資料を検索できるデジタルアーカイブです。">
+    <meta name="keywords" content="歴史資料,民具資料,考古資料,小川郷太郎,里庄町歴史民俗資料館,歴史,民俗,資料館,里庄町">
+    <title>資料検索 | 里庄町歴史民俗資料館 デジタルミュージアム</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #059669;
+            --accent-color: #8b5cf6;
+            --background-light: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+        
+        /* ローディング画面 */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* カードエフェクト */
+        .card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* スマホ表示の改善 */
+        @media (max-width: 640px) {
+            body {
+                overflow-x: hidden;
+            }
+            
+            h1, h2, h3, h4, h5, h6, p, li, a {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+            }
+            
+            .text-2xl {
+                font-size: 1.5rem;
+            }
+            .text-3xl {
+                font-size: 1.5rem;
+            }
+            
+            .text-4xl {
+                font-size: 1.75rem;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .card p {
+                font-size: 0.875rem;
+                line-height: 1.4;
+            }
+            
+            .card li {
+                margin-bottom: 0.25rem;
+                font-size: 0.875rem;
+            }
+        }
+        
+        /* カスタムスクロールバー */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        /* アクセシビリティ向上のためのフォーカスインジケーター */
+        *:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+        
+        /* 言語切り替えボタン */
+        .lang-switch {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .lang-switch:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+        }
+        
+        /* プログレスバー */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            z-index: 9998;
+            transition: width 0.3s ease;
+        }
+        
+        /* アクセシビリティ - スキップリンク */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        /* 資料カード用のスタイル */
+        .document-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .document-card .image-container {
+            height: 160px;
+            overflow: hidden;
+        }
+        
+        @media (min-width: 640px) {
+            .document-card .image-container {
+                height: 220px;
+            }
+        }
+        
+        .document-card .content {
+            flex-grow: 1;
+        }
+        
+        /* タグのスタイル */
+        .tag {
+            display: inline-block;
+            background-color: #e2e8f0;
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
+            margin-right: 0.35rem;
+            margin-bottom: 0.35rem;
+            transition: all 0.2s;
+        }
+        
+        @media (min-width: 640px) {
+            .tag {
+                padding: 0.25rem 0.75rem;
+                font-size: 0.75rem;
+                margin-right: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+        
+        /* 資料タイプのバッジ */
+        .type-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 10;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        @media (min-width: 640px) {
+            .type-badge {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.75rem;
+            }
+        }
+        
+        .type-historical {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .type-folk {
+            background-color: #d1fae5;
+            color: #047857;
+        }
+        
+        .type-archeology {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        /* アニメーション */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* フィルターボタンスタイル */
+        .filter-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .filter-button.active {
+            background-color: #1e40af;
+            color: white;
+            border-color: #1e40af;
+        }
+        
+        /* 検索結果のハイライト */
+        .highlight {
+            background-color: #fef08a;
+            padding: 0 0.2em;
+            border-radius: 0.2em;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- ローディング画面 -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <p class="mt-4 text-lg font-semibold text-gray-600">読み込み中...</p>
+    </div>
+    
+    <!-- プログレスバー -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <!-- スキップリンク (アクセシビリティ) -->
+    <a href="#main-content" class="skip-link">メインコンテンツへスキップ</a>
+    
+    <!-- ヘッダー -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- ロゴ -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="/" class="flex items-center">
+                            <i class="fas fa-museum text-2xl sm:text-3xl text-blue-700 mr-2 sm:mr-3"></i>
+                            <div>
+                                <h1 class="text-sm sm:text-base md:text-xl font-bold text-gray-900">里庄町歴史民俗資料館<span class="hidden md:inline">デジタルミュージアム</span></h1>
+                                <p class="text-xs text-gray-600 hidden sm:block">Satosho-cho Digital Museum</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- デスクトップナビゲーション -->
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <div class="relative group">
+                        <a href="#exhibitions" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors group">
+                            展示
+                            <i class="fas fa-chevron-down text-xs ml-1"></i>
+                        </a>
+                        <div class="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                            <a href="#virtual-tour" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700">バーチャルツアー</a>
+                            <a href="#3d-models" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700">3Dコレクション</a>
+                            <a href="#special-exhibitions" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700">特別展示</a>
+                        </div>
+                    </div>
+                    <a href="#research" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors">研究</a>
+                    <a href="#education" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors">教育</a>
+                    <a href="userguide.html" class="text-gray-700 hover:text-blue-700 px-3 py-2 font-medium transition-colors">当館について</a>
+                </nav>
+                
+                <!-- 右側のアクション -->
+                <div class="flex items-center space-x-4">
+                    
+                    <!-- 言語切り替え -->
+                    <div class="lang-switch relative">
+                        <button class="flex items-center space-x-1 text-gray-600 hover:text-blue-700">
+                            <i class="fas fa-globe"></i>
+                            <span class="hidden md:inline">JA</span>
+                        </button>
+                        <div class="lang-dropdown">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">日本語</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">English</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">中文</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">한국어</a>
+                        </div>
+                    </div>
+                    
+                    <!-- モバイルメニューボタン -->
+                    <button id="mobileMenuButton" class="lg:hidden p-2 text-gray-600 hover:text-blue-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- モバイルメニュー -->
+        <div id="mobileMenu" class="lg:hidden hidden bg-white border-t">
+            <div class="px-4 py-2 space-y-1">
+                <a href="#exhibitions" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">展示</a>
+                <a href="#research" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">研究</a>
+                <a href="#education" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">教育</a>
+                <a href="userguide.html" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md">当館について</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- メインコンテンツ -->
+    <main id="main-content" class="pt-24 sm:pt-28">
+       <!-- 検索セクション -->
+        <section class="py-8 sm:py-12 bg-white shadow-md">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-xl sm:text-2xl font-bold mb-6 text-center">資料検索</h2>
+                    <form id="searchForm" class="mb-6">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-1">
+                                <label for="search-keyword" class="block text-sm font-medium text-gray-700 mb-2">キーワードで検索</label>
+                                <input type="text" id="search-keyword" name="keyword" placeholder="例：小川郷太郎、古文書、江戸時代など" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                            </div>
+                            <div class="sm:self-end">
+                                <button type="submit" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors text-sm">
+                                    <i class="fas fa-search mr-2"></i>検索
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- 資料タイプフィルター -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-medium text-gray-700 mb-3">資料種別</h3>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <button type="button" class="filter-button active" data-type="all">
+                                すべて
+                            </button>
+                            <button type="button" class="filter-button" data-type="historical">
+                                <span class="w-2 h-2 rounded-full bg-blue-500 mr-1.5"></span>歴史資料
+                            </button>
+                            <button type="button" class="filter-button" data-type="folk">
+                                <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>民具資料
+                            </button>
+                            <button type="button" class="filter-button" data-type="archeology">
+                                <span class="w-2 h-2 rounded-full bg-amber-500 mr-1.5"></span>考古資料
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 人気のタグ -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-medium text-gray-700 mb-3">人気のタグから探す</h3>
+                        <div class="flex flex-wrap">
+                            <button type="button" class="tag tag-filter" data-tag="小川郷太郎">#小川郷太郎</button>
+                            <button type="button" class="tag tag-filter" data-tag="古文書">#古文書</button>
+                            <button type="button" class="tag tag-filter" data-tag="里庄町史">#里庄町史</button>
+                            <button type="button" class="tag tag-filter" data-tag="農具">#農具</button>
+                            <button type="button" class="tag tag-filter" data-tag="生活用具">#生活用具</button>
+                            <button type="button" class="tag tag-filter" data-tag="土器">#土器</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 検索結果カウンター -->
+                    <div id="search-results-counter" class="text-sm text-gray-600 mb-2 hidden">
+                        検索結果: <span id="result-count">0</span>件
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 資料グリッド -->
+        <section class="py-10 sm:py-16 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- 資料グリッド -->
+                <div id="document-grid" class="grid grid-cols-2 gap-3 sm:gap-6 md:gap-8">
+                    <!-- 歴史資料カード -->
+                    <a href="/documents/detail?id=123" class="document-card card rounded-xl overflow-hidden shadow-md block" data-tags="小川郷太郎,明治時代,里庄町史,書状" data-type="historical">
+                        <div class="image-container relative">
+                            <span class="type-badge type-historical">歴史資料</span>
+                            <img src="/api/placeholder/600/400" alt="小川郷太郎関連資料" class="w-full h-full object-cover">
+                        </div>
+                        <div class="content p-2 sm:p-4">
+                            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-3">小川郷太郎書簡集（1880-1910）</h3>
+                            <div class="flex flex-wrap">
+                                <span class="tag">#小川郷太郎</span>
+                                <span class="tag">#明治時代</span>
+                                <span class="tag">#里庄町史</span>
+                                <span class="tag">#書状</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- 歴史資料カード2 -->
+                    <a href="/documents/detail?id=124" class="document-card card rounded-xl overflow-hidden shadow-md block" data-tags="古文書,江戸時代,文政年間,絵図" data-type="historical">
+                        <div class="image-container relative">
+                            <span class="type-badge type-historical">歴史資料</span>
+                            <img src="/api/placeholder/600/400" alt="江戸時代古文書" class="w-full h-full object-cover">
+                        </div>
+                        <div class="content p-2 sm:p-4">
+                            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-3">文政年間 里庄村絵図</h3>
+                            <div class="flex flex-wrap">
+                                <span class="tag">#古文書</span>
+                                <span class="tag">#江戸時代</span>
+                                <span class="tag">#文政年間</span>
+                                <span class="tag">#絵図</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- 検索結果がない場合のメッセージ -->
+                <div id="no-results" class="hidden text-center py-10">
+                    <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                    <p class="text-lg text-gray-600">検索結果がありません。別のキーワードで検索してください。</p>
+                </div>
+                
+                <!-- もっと見るボタン -->
+                <div class="text-center mt-10">
+                    <button id="load-more" class="bg-white hover:bg-gray-100 text-blue-700 font-semibold py-3 px-6 border border-blue-500 rounded-lg shadow-sm transition-colors">
+                        もっと見る <i class="fas fa-chevron-down ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- フッター -->
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 py-10 sm:py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- ブランド情報 -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-museum text-xl sm:text-2xl text-blue-500 mr-3"></i>
+                        <div>
+                            <h3 class="text-white text-sm sm:text-base font-bold">里庄町歴史民俗資料館デジタルミュージアム</h3>
+                            <p class="text-xs sm:text-sm">Satosho-cho Digital Museum</p>
+                        </div>
+                    </div>
+                    <p class="mb-4 text-xs sm:text-sm">
+                        里庄町歴史民俗資料館のデジタルミュージアムは、最新技術を駆使して文化遺産を保存・公開しています。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-lg sm:text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-lg sm:text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-lg sm:text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-youtube text-lg sm:text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- リンク列1 -->
+                <div>
+                    <h4 class="text-white text-sm sm:text-base font-semibold mb-4">展示・コレクション</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">常設展示</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">特別展示</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">3Dコレクション</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">デジタルアーカイブ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">バーチャルツアー</a></li>
+                    </ul>
+                </div>
+                
+                <!-- リンク列2 -->
+                <div>
+                    <h4 class="text-white text-sm sm:text-base font-semibold mb-4">サービス・サポート</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">利用案内</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">よくある質問</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 下部情報 -->
+            <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-xs sm:text-sm mb-4 md:mb-0">
+                        &copy; 2025 里庄町歴史民俗資料館デジタルミュージアム by katsujiRingX. All rights reserved.
+                    </div>
+                    <div class="flex flex-wrap gap-4 text-xs sm:text-sm">
+                        <a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a>
+                        <a href="#" class="hover:text-white transition-colors">利用規約</a>
+                        <a href="#" class="hover:text-white transition-colors">アクセシビリティ</a>
+                        <a href="#" class="hover:text-white transition-colors">サイトマップ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // ローディング画面の制御
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loadingScreen');
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+        
+        // スクロールプログレスバー
+        window.addEventListener('scroll', () => {
+            const progressBar = document.getElementById('progressBar');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPosition = window.scrollY;
+            const progress = (scrollPosition / scrollHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+        
+        // モバイルメニュー
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 資料タイプフィルター
+        document.querySelectorAll('.filter-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // アクティブボタンをリセット
+                document.querySelectorAll('.filter-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // クリックされたボタンをアクティブに
+                this.classList.add('active');
+                
+                const type = this.getAttribute('data-type');
+                filterByType(type);
+            });
+        });
+        
+        // 資料タイプによるフィルタリング
+        function filterByType(type) {
+            const documentCards = document.querySelectorAll('.document-card');
+            let visibleCount = 0;
+            
+            documentCards.forEach(card => {
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // 検索結果カウンターを表示/更新
+            document.getElementById('search-results-counter').classList.remove('hidden');
+            document.getElementById('result-count').textContent = visibleCount;
+            
+            // 結果がない場合のメッセージ
+            if (visibleCount === 0) {
+                document.getElementById('no-results').classList.remove('hidden');
+                document.getElementById('load-more').classList.add('hidden');
+            } else {
+                document.getElementById('no-results').classList.add('hidden');
+                document.getElementById('load-more').classList.remove('hidden');
+            }
+            
+            // アニメーション
+            document.querySelectorAll('.document-card:not(.hidden)').forEach(card => {
+                card.classList.add('fade-in');
+                setTimeout(() => {
+                    card.classList.remove('fade-in');
+                }, 500);
+            });
+        }
+        
+        // 検索機能
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const keyword = document.getElementById('search-keyword').value.toLowerCase();
+            searchDocuments(keyword);
+        });
+        
+        // タグフィルター
+        document.querySelectorAll('.tag-filter').forEach(tag => {
+            tag.addEventListener('click', function() {
+                const tagValue = this.getAttribute('data-tag');
+                document.getElementById('search-keyword').value = tagValue;
+                searchDocuments(tagValue);
+            });
+        });
+        
+        // 検索実行関数
+        function searchDocuments(query) {
+            query = query.toLowerCase().trim();
+            const documentCards = document.querySelectorAll('.document-card');
+            let matchCount = 0;
+            
+            // 現在のタイプフィルターを取得
+            const activeTypeFilter = document.querySelector('.filter-button.active').getAttribute('data-type');
+            
+            // リセット
+            document.querySelectorAll('.highlight').forEach(el => {
+                el.outerHTML = el.innerHTML;
+            });
+            
+            documentCards.forEach(card => {
+                const cardContent = card.textContent.toLowerCase();
+                const cardTags = card.getAttribute('data-tags').toLowerCase();
+                const cardType = card.getAttribute('data-type');
+                const titles = card.querySelectorAll('h3');
+                
+                // 検索条件（キーワードとタイプ）に一致するか確認
+                const matchesQuery = query === '' || cardContent.includes(query) || cardTags.includes(query);
+                const matchesType = activeTypeFilter === 'all' || cardType === activeTypeFilter;
+                
+                if (matchesQuery && matchesType) {
+                    card.classList.remove('hidden');
+                    matchCount++;
+                    
+                    // クエリがある場合にハイライト
+                    if (query !== '') {
+                        // タイトルをハイライト
+                        titles.forEach(title => {
+                            if (title.textContent.toLowerCase().includes(query)) {
+                                title.innerHTML = highlightText(title.textContent, query);
+                            }
+                        });
+                    }
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // 結果カウンターを表示
+            document.getElementById('search-results-counter').classList.remove('hidden');
+            document.getElementById('result-count').textContent = matchCount;
+            
+            // 結果がない場合のメッセージ
+            if (matchCount === 0) {
+                document.getElementById('no-results').classList.remove('hidden');
+                document.getElementById('load-more').classList.add('hidden');
+            } else {
+                document.getElementById('no-results').classList.add('hidden');
+                document.getElementById('load-more').classList.remove('hidden');
+            }
+            
+            // アニメーション効果
+            document.querySelectorAll('.document-card:not(.hidden)').forEach(card => {
+                card.classList.add('fade-in');
+                setTimeout(() => {
+                    card.classList.remove('fade-in');
+                }, 500);
+            });
+        }
+        
+        // テキストのハイライト関数
+        function highlightText(text, query) {
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+        
+        // もっと見るボタン
+        document.getElementById('load-more').addEventListener('click', function() {
+            // 現在のフィルターを取得
+            const activeTypeFilter = document.querySelector('.filter-button.active').getAttribute('data-type');
+            
+            // 新しい資料を追加
+            const newDocuments = [
+                {
+                    id: 129,
+                    image: '/api/placeholder/600/400',
+                    title: '大正期 小川郷太郎政治活動資料',
+                    type: 'historical',
+                    typeName: '歴史資料',
+                    tags: ['小川郷太郎', '大正時代', '政治', '議会']
+                },
+               
+            ];
+            
+            const grid = document.getElementById('document-grid');
+            let addedCount = 0;
+            
+            newDocuments.forEach(doc => {
+                // 現在のフィルターに一致するかチェック
+                if (activeTypeFilter === 'all' || doc.type === activeTypeFilter) {
+                    const newCard = document.createElement('a');
+                    newCard.href = `/documents/detail?id=${doc.id}`;
+                    newCard.className = 'document-card card rounded-xl overflow-hidden shadow-md fade-in';
+                    newCard.setAttribute('data-tags', doc.tags.join(','));
+                    newCard.setAttribute('data-type', doc.type);
+                    
+                    let typeBadgeClass = '';
+                    switch(doc.type) {
+                        case 'historical':
+                            typeBadgeClass = 'type-historical';
+                            break;
+                        case 'folk':
+                            typeBadgeClass = 'type-folk';
+                            break;
+                        case 'archeology':
+                            typeBadgeClass = 'type-archeology';
+                            break;
+                    }
+                    
+                    newCard.innerHTML = `
+                        <div class="image-container relative">
+                            <span class="type-badge ${typeBadgeClass}">${doc.typeName}</span>
+                            <img src="${doc.image}" alt="${doc.title}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="content p-2 sm:p-4">
+                            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-3">${doc.title}</h3>
+                            <div class="flex flex-wrap">
+                                ${doc.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                    
+                    grid.appendChild(newCard);
+                    addedCount++;
+                    
+                    // 現在の検索キーワードに対してフィルタリング
+                    const currentQuery = document.getElementById('search-keyword').value.toLowerCase().trim();
+                    if (currentQuery !== '') {
+                        // 追加したカードも検索条件に合わせて表示/非表示を設定
+                        const cardContent = newCard.textContent.toLowerCase();
+                        const cardTags = newCard.getAttribute('data-tags').toLowerCase();
+                        
+                        if (!(cardContent.includes(currentQuery) || cardTags.includes(currentQuery))) {
+                            newCard.classList.add('hidden');
+                            addedCount--;
+                        }
+                    }
+                }
+            });
+            
+            // 表示されているカード数を更新
+            const visibleCount = parseInt(document.getElementById('result-count').textContent) + addedCount;
+            document.getElementById('result-count').textContent = visibleCount;
+            
+            // 追加コンテンツがない場合、もしくは全て非表示の場合
+            if (addedCount === 0) {
+                if (visibleCount === 0) {
+                    document.getElementById('no-results').classList.remove('hidden');
+                }
+                this.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
