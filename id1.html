@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="里庄町歴史民俗資料館所蔵「小川郷太郎書簡集（1880-1910）」の詳細情報。">
+    <meta name="description" content="里庄町歴史民俗資料館所蔵「小川郷太郎」の詳細情報。">
     <meta name="keywords" content="小川郷太郎,書簡,明治時代,里庄町歴史民俗資料館,歴史資料">
     <title>小川郷太郎書簡集（1880-1910） | 里庄町歴史民俗資料館</title>
     
@@ -533,11 +533,22 @@
             flex-direction: column;
             gap: 1rem;
         }
+        
+        /* 画像表示デバッグ用 */
+        .debug-info {
+            background-color: #f9fafb;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #6b7280;
+            display: none; /* 通常は非表示 */
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
-    <!-- ローディング画面 -->
-    <div class="loading-screen" id="loadingScreen">
+    <!-- ローディング画面 - 初期状態は非表示 -->
+    <div class="loading-screen" id="loadingScreen" style="display: none;">
         <div class="loading-spinner"></div>
         <p class="mt-4 text-lg font-semibold text-gray-600">読み込み中...</p>
     </div>
@@ -575,23 +586,13 @@
     
     <!-- メインコンテンツ -->
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <!-- パンくずリスト -->
-        <div class="breadcrumb">
-            <a href="/">ホーム</a>
-            <span class="breadcrumb-separator">/</span>
-            <a href="/search">資料検索</a>
-            <span class="breadcrumb-separator">/</span>
-            <a href="/search?type=historical">歴史資料</a>
-            <span class="breadcrumb-separator">/</span>
-            <span>小川郷太郎書簡集（1880-1910）</span>
-        </div>
-        
         <!-- 資料タイトル -->
         <div class="mb-6">
             <div class="flex items-center gap-2 mb-2">
                 <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">歴史資料</span>
             </div>
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold">小川郷太郎書簡集（1880-1910）</h1>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold">小川郷太郎(仮名)</h1>
+            </h1>
         </div>
         
         <!-- 画像とメタデータのグリッド -->
@@ -601,9 +602,8 @@
                 <!-- 画像表示エリア -->
                 <div class="image-viewer">
                     <div id="panZoomContainer" class="w-full h-full">
-                        <img src="https://via.placeholder.com/1200x800?text=小川郷太郎書簡1" alt="絵はがき" id="mainImage" class="w-full h-full object-contain">
+                        <img src="/api/placeholder/800/600?text=初期画像" alt="書簡画像" id="mainImage" class="w-full h-full object-contain">
                     </div>
-                    
                     <!-- 画像操作ツールバー -->
                     <div class="image-toolbar">
                         <button class="tool-button" id="zoomIn" title="拡大"><i class="fas fa-search-plus"></i></button>
@@ -615,19 +615,21 @@
                     </div>
                 </div>
                 
+                <!-- デバッグ情報 (開発時のみ表示) -->
+                <div class="debug-info" id="debugInfo">
+                    画像読み込み状態: <span id="loadStatus">未読み込み</span>
+                </div>
+                
                 <!-- サムネイル -->
                 <div class="thumbnail-gallery mt-4">
-                    <div class="thumbnail active">
-                        <img src="https://via.placeholder.com/300x300?text=書簡1" alt="原本" data-full="https://via.placeholder.com/1200x800?text=小川郷太郎書簡1">
+                    <div class="thumbnail active" id="thumbnail1">
+                        <img src="id1pic.JPG" alt="原本" data-full="/api/placeholder/800/600?text=書簡1">
                     </div>
-                     <div class="thumbnail active">
-                        <img src="https://via.placeholder.com/300x300?text=書簡1" alt="原本裏" data-full="https://via.placeholder.com/1200x800?text=小川郷太郎書簡1">
+                    <div class="thumbnail" id="thumbnail2">
+                        <img src="id1pic2.JPG" alt="原本裏" data-full="/api/placeholder/800/600?text=書簡2">
                     </div>
-                    <div class="thumbnail">
-                        <img src="https://via.placeholder.com/300x300?text=書簡2" alt="翻刻" data-full="https://via.placeholder.com/1200x800?text=小川郷太郎書簡2">
-                    </div>
-                     <div class="thumbnail active">
-                        <img src="https://via.placeholder.com/300x300?text=書簡1" alt="翻刻裏" data-full="https://via.placeholder.com/1200x800?text=小川郷太郎書簡1">
+                    <div class="thumbnail" id="thumbnail3">
+                        <img src="id1ddw.png" alt="翻刻" data-full="/api/placeholder/800/600?text=書簡3">
                     </div>
                 </div>
                 
@@ -635,9 +637,7 @@
                 <div class="mt-6">
                     <div class="flex flex-wrap">
                         <a href="/search?tag=小川郷太郎" class="tag">#小川郷太郎</a>
-                        <a href="/search?tag=明治時代" class="tag">#明治時代</a>
                         <a href="/search?tag=里庄町史" class="tag">#里庄町史</a>
-                        <a href="/search?tag=政治家" class="tag">#政治家</a>
                         <a href="/search?tag=教育" class="tag">#教育</a>
                     </div>
                 </div>
@@ -716,31 +716,7 @@
                     
                     <div class="space-y-4 text-gray-800">
                         <p>
-                            本資料は、里庄町出身の政治家・教育者である小川郷太郎（1857-1929）が、明治13年から明治43年にかけて家族や知人に宛てた書簡124通を収録したコレクションです。小川は明治期の日本において、教育改革や地方自治の推進に尽力した人物として知られています。
-                        </p>
-                        
-                        <p>
-                            書簡の内容は、小川が帝国大学在学中の留学報告、文部省での政策立案に関する記述、議会活動の報告など多岐にわたり、明治期の政治・教育情勢を知る上で貴重な一次資料となっています。中でも、「教育勅語」の草案過程に関する記述や、近代学校制度の整備に関する見解を示した書簡は、教育史研究において重要な価値を持つものです。
-                        </p>
-                        
-                        <p>
-                            言語は主に日本語ですが、英語やドイツ語で記された書簡も含まれており、小川の国際的な教育観や視野の広さを示しています。また、書簡中には当時の政治家や学者との交流についての記述も見られ、明治期の知識人ネットワークの一端を垣間見ることができます。
-                        </p>
-                        
-                        <p>
-                            料紙には和紙と洋紙が使用され、毛筆だけでなくペン書きの書簡も含まれているのが特徴です。保存状態は総じて良好で、明治期の書簡文化を知る上でも貴重な資料群となっています。
-                        </p>
-                        
-                        <h3 class="text-lg font-semibold mt-6 mb-2">小川郷太郎について</h3>
-                        
-                        <p>
-                            小川郷太郎は安政4年（1857年）に現在の岡山県浅口郡里庄町に生まれました。東京帝国大学法学部を卒業後、文部省に入省。その後、第一高等学校教授、東京帝国大学教授を歴任し、明治34年（1901年）から衆議院議員として教育政策の推進に尽力しました。大正から昭和初期にかけては、里庄町の教育・文化振興にも力を注ぎ、地域の発展に貢献しました。昭和4年（1929年）に72歳で逝去しました。
-                        </p>
-                        
-                        <h3 class="text-lg font-semibold mt-6 mb-2">資料の来歴</h3>
-                        
-                        <p>
-                            本書簡集は、小川家が代々保管していたものを平成12年（2000年）に小川家当主より里庄町歴史民俗資料館に寄贈されました。学術的価値が高く評価され、平成15年（2003年）に重要文化財の指定を受けています。
+                            準備中
                         </p>
                     </div>
                 </div>
@@ -757,11 +733,6 @@
                                 <span class="px-2 text-sm">文字サイズ</span>
                                 <button id="increase-font" title="文字サイズを大きく"><i class="fas fa-plus"></i></button>
                             </div>
-                            
-                            <div class="direction-switch ml-2">
-                                <button id="vertical-mode" class="active">縦書き</button>
-                                <button id="horizontal-mode">横書き</button>
-                            </div>
                         </div>
                     </div>
                     
@@ -769,19 +740,33 @@
                     <!-- 縦書きコンテンツ -->
                     <div id="vertical-content" class="space-y-6 text-gray-800">
                         <div class="bg-gray-50 p-4 rounded-lg">
-                            <h3 class="text-lg font-semibold mb-2">小川郷太郎</h3>
+                            <h3 class="text-lg font-semibold mb-2">🟥🟦🟩</h3>
                             
                             <div class="vertical-text-container">
                                 <div class="vertical-text" id="vertical-text-element">
                                     <div class="vertical-text-block">
-                                        <p>
-                                            拝啓　<span class="highlight">春暖之候ニ相成候處ニテ</span>　貴家益々御健勝被遊候趣　欣喜至極ニ奉存候　扨私儀東京着以來多忙ヲ極メ　未タ充分ナル研究モ及ハサルモ　一昨日始メテ某先達ニ面会イタシ　<span class="highlight">教育制度改革ニ関スル件ニ付</span>　数時間ニ渉リ議論仕リ候　我国今後ノ教育方針ニ付テハ　種々ノ異見アリ　方向定マラサル處モ少ナカラス候　何分子細ハ後刻帰省ノ節　委細相談申上候　ご意見承リ候　追テ母上様ニモ宜敷御伝言可被下候也
-                                        </p>
-                                        <p class="text-right mt-2">
-                                            明治十九年四月八日<br>
-                                            小川郷太郎<br>
-                                            小川雄蔵様　　
-                                        </p>
+<ul>上海二着ス。</ul>
+<ul>記念ノ為二同行者二署名ヲ</ul>
+<ul>請ウテ送ル。</ul>
+<ul>法学士</ul>
+<ul>北田彦三郎</ul>
+<ul>工学士</ul>
+<ul>大橋多吉</ul>
+<ul>農学士</ul>
+<ul>八鍬儀七郎</ul>
+<ul>医士</ul>
+<ul>天町弘</ul>
+<ul>商</ul>
+<ul>木邑□玄</ul>
+<ul>陸軍一等軍医</ul>
+<ul>橋本監次郎</ul>
+<ul>横浜□□</ul>
+<ul>岡島寅次郎</ul>
+<ul>□機□□</ul>
+<ul>□□春太郎</ul>
+<ul>上様</ul>
+<ul>山本栄作</ul>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -805,7 +790,7 @@
                                         <tbody>
                                             <tr>
                                                 <th>資料名</th>
-                                                <td>小川郷太郎書簡集</td>
+                                                <td>小川郷太郎</td>
                                             </tr>
                                             <tr>
                                                 <th>年代</th>
@@ -884,78 +869,84 @@
                                 </div>
                             </div>
                         </div>
-                        
-                    
-                    <!-- 資料デジタル化情報 -->
-                    <div class="mt-8">
-                        <h3 class="text-lg font-semibold mb-4 pb-2 border-b">デジタル化・管理情報</h3>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="font-medium text-blue-800 mb-2">デジタル化情報</h4>
-                                <table class="excel-table">
-                                    <tbody>
-                                        <tr>
-                                            <th>撮影日</th>
-                                            <td>２０２５年</td>
-                                        </tr>
-                                        <tr>
-                                            <th>撮影機材</th>
-                                            <td>記載なし</td>
-                                        </tr>
-                                        <tr>
-                                            <th>解像度</th>
-                                            <td>記載なし</td>
-                                        </tr>
-                                        <tr>
-                                            <th>カラー情報</th>
-                                            <td>記載なし</td>
-                                        </tr>
-                                        <tr>
-                                            <th>ファイル形式</th>
-                                            <td>JPEG</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <!-- 資料デジタル化情報 - 改良版 -->
+<div class="mt-8">
+    <h3 class="text-lg font-semibold mb-4 pb-2 border-b border-blue-200">デジタル化・管理情報</h3>
+    
+    <!-- カード型レイアウトに変更 -->
+    <div class="grid grid-cols-1 gap-8">
+        <!-- デジタル化情報カード -->
+        <div class="bg-blue-50 rounded-lg p-6 shadow-sm border border-blue-100">
+            <h4 class="font-medium text-blue-800 mb-4 flex items-center">
+                <i class="fas fa-camera-retro mr-2"></i>デジタル化情報
+            </h4>
+            <table class="excel-table">
+                <tbody>
+                    <tr>
+                        <th class="w-1/3">撮影日</th>
+                        <td>２０２５年</td>
+                    </tr>
+                    <tr>
+                        <th>撮影機材</th>
+                        <td>記載なし</td>
+                    </tr>
+                    <tr>
+                        <th>解像度</th>
+                        <td>記載なし</td>
+                    </tr>
+                    <tr>
+                        <th>カラー情報</th>
+                        <td>記載なし</td>
+                    </tr>
+                    <tr>
+                        <th>ファイル形式</th>
+                        <td>JPEG</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 権利・利用情報カード -->
+        <div class="bg-green-50 rounded-lg p-6 shadow-sm border border-green-100">
+            <h4 class="font-medium text-green-800 mb-4 flex items-center">
+                <i class="fas fa-copyright mr-2"></i>権利・利用情報
+            </h4>
+            <table class="excel-table">
+                <tbody>
+                    <tr>
+                        <th class="w-1/3">所有権</th>
+                        <td>里庄町歴史民俗資料館</td>
+                    </tr>
+                    <tr>
+                        <th>利用条件</th>
+                        <td>
+                            <div class="space-y-2">
+                                <div class="flex items-center"><i class="fas fa-eye text-blue-500 mr-2"></i>閲覧: 無料・制限なし</div>
+                                <div class="flex items-center"><i class="fas fa-copy text-amber-500 mr-2"></i>複写: 申請制（学術・教育目的のみ）</div>
+                                <div class="flex items-center"><i class="fas fa-share-alt text-green-500 mr-2"></i>転載: 申請制（出典明記必須）</div>
                             </div>
-                            
-                            <div>
-                                <h4 class="font-medium text-blue-800 mb-2">権利・利用情報</h4>
-                                <table class="excel-table">
-                                    <tbody>
-                                        <tr>
-                                            <th>所有権</th>
-                                            <td>里庄町歴史民俗資料館</td>
-                                        </tr>
-                                        <tr>
-                                            <th>利用条件</th>
-                                            <td>
-                                                閲覧: 無料・制限なし<br>
-                                                複写: 申請制（学術・教育目的のみ）<br>
-                                                転載: 申請制（出典明記必須）
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>閲覧制限</th>
-                                            <td>なし</td>
-                                        </tr>
-                                        <tr>
-                                            <th>引用方法</th>
-                                            <td>「小川郷太郎書簡集, No., 明治年月日, 里庄町歴史民俗資料館所蔵」</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>閲覧制限</th>
+                        <td>なし</td>
+                    </tr>
+                    <tr>
+                        <th>引用方法</th>
+                        <td class="bg-yellow-50 p-2 border-l-2 border-yellow-400">「小川郷太郎, No., 明治年月日, 里庄町歴史民俗資料館所蔵」</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
                 </div>
             </div>
         </div>
         
         <!-- 注釈 -->
         <div class="footnote">
-            <p>※ 本資料は、文化財保護法に基づく重要文化財に指定されています。複製・転載には許可が必要です。</p>
+            <p>※ 複製・転載には許可が必要です。</p>
             <p>※ 画像は著作権保護のためダウンロードすることはできません。研究・教育目的の場合は資料館までお問い合わせください。</p>
         </div>
     </main>
@@ -973,7 +964,7 @@
                 </div>
                 
                 <div class="text-xs">
-                    &copy; 2025 里庄町歴史民俗資料館デジタルミュージアム by katsujiRingX. All rights reserved.
+                    &copy; 2025 里庄町歴史民俗資料館デジタルミュージアム by KatsujiRingX. All rights reserved.
                 </div>
             </div>
         </div>
@@ -981,14 +972,10 @@
     
     <!-- JavaScript -->
     <script>
-        // ローディング画面の制御
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.getElementById('loadingScreen').style.opacity = '0';
-                setTimeout(function() {
-                    document.getElementById('loadingScreen').style.display = 'none';
-                }, 500);
-            }, 500);
+        // ローディング画面の制御 - 単純化
+        document.addEventListener('DOMContentLoaded', function() {
+            // ローディング画面は既に非表示
+            console.log('ページが読み込まれました');
         });
         
         // スクロールプログレスバー
@@ -1004,10 +991,40 @@
             // 画像表示用変数
             let currentScale = 1;
             let currentRotation = 0;
+            let offsetX = 0;
+            let offsetY = 0;
             
-            // Panzoom の代わりにカスタム実装
+            // 要素の取得
             const panZoomContainer = document.getElementById('panZoomContainer');
             const mainImage = document.getElementById('mainImage');
+            const loadStatus = document.getElementById('loadStatus');
+            
+            // デバッグモード (開発時は true に設定)
+            const debugMode = false;
+            
+            if (debugMode) {
+                document.getElementById('debugInfo').style.display = 'block';
+            }
+            
+            // 単純化した初期画像の設定
+            function setFirstImageAsThumbnail() {
+                // まず、アクティブなサムネイルのデータをメイン画像に設定
+                const firstThumbnail = document.querySelector('.thumbnail.active img');
+                if (firstThumbnail) {
+                    console.log('アクティブなサムネイルを使用します');
+                    
+                    // ここで直接サムネイルの画像をメイン画像に設定
+                    mainImage.src = firstThumbnail.src;
+                    
+                    // コンソールに情報を出力
+                    console.log('サムネイル画像をメイン表示に設定: ' + mainImage.src);
+                } else {
+                    console.log('アクティブなサムネイルが見つかりません。デフォルト画像を使用します。');
+                }
+            }
+            
+            // 即時実行
+            setFirstImageAsThumbnail();
             
             // ズームイン
             document.getElementById('zoomIn').addEventListener('click', function() {
@@ -1080,9 +1097,14 @@
                     thumbnails.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // メイン画像を更新
-                    const fullImageSrc = this.querySelector('img').getAttribute('data-full');
-                    mainImage.src = fullImageSrc;
+                    // メイン画像を更新 - 単純化
+                    const thumbnailImg = this.querySelector('img');
+                    
+                    // サムネイル自身の画像を直接使用（シンプルにするため）
+                    console.log('サムネイルがクリックされました: ' + thumbnailImg.src);
+                    
+                    // 直接サムネイル画像をメイン画像に設定
+                    mainImage.src = thumbnailImg.src;
                     
                     // トランスフォームをリセット
                     currentScale = 1;
@@ -1122,41 +1144,47 @@
             const verticalContent = document.getElementById('vertical-content');
             const horizontalContent = document.getElementById('horizontal-content');
             
-            verticalModeButton.addEventListener('click', function() {
-                verticalModeButton.classList.add('active');
-                horizontalModeButton.classList.remove('active');
-                verticalContent.classList.remove('hidden');
-                horizontalContent.classList.add('hidden');
-            });
-            
-            horizontalModeButton.addEventListener('click', function() {
-                horizontalModeButton.classList.add('active');
-                verticalModeButton.classList.remove('active');
-                horizontalContent.classList.remove('hidden');
-                verticalContent.classList.add('hidden');
-            });
+            if (verticalModeButton && horizontalModeButton) {
+                verticalModeButton.addEventListener('click', function() {
+                    verticalModeButton.classList.add('active');
+                    horizontalModeButton.classList.remove('active');
+                    if (verticalContent) verticalContent.style.display = 'block';
+                    if (horizontalContent) horizontalContent.style.display = 'none';
+                });
+                
+                horizontalModeButton.addEventListener('click', function() {
+                    horizontalModeButton.classList.add('active');
+                    verticalModeButton.classList.remove('active');
+                    if (horizontalContent) horizontalContent.style.display = 'block';
+                    if (verticalContent) verticalContent.style.display = 'none';
+                });
+            }
             
             // 文字サイズ調整
             const verticalTextElement = document.getElementById('vertical-text-element');
             let fontSize = 1.1; // 初期サイズ (rem)
             
-            document.getElementById('increase-font').addEventListener('click', function() {
-                if (fontSize < 1.8) {
-                    fontSize += 0.1;
-                    verticalTextElement.style.fontSize = fontSize + 'rem';
-                }
-            });
+            if (document.getElementById('increase-font') && verticalTextElement) {
+                document.getElementById('increase-font').addEventListener('click', function() {
+                    if (fontSize < 1.8) {
+                        fontSize += 0.1;
+                        verticalTextElement.style.fontSize = fontSize + 'rem';
+                    }
+                });
+            }
             
-            document.getElementById('decrease-font').addEventListener('click', function() {
-                if (fontSize > 0.8) {
-                    fontSize -= 0.1;
-                    verticalTextElement.style.fontSize = fontSize + 'rem';
-                }
-            });
+            if (document.getElementById('decrease-font') && verticalTextElement) {
+                document.getElementById('decrease-font').addEventListener('click', function() {
+                    if (fontSize > 0.8) {
+                        fontSize -= 0.1;
+                        verticalTextElement.style.fontSize = fontSize + 'rem';
+                    }
+                });
+            }
             
             // 画像のドラッグ機能
             let isDragging = false;
-            let startX, startY, initialX = 0, initialY = 0, offsetX = 0, offsetY = 0;
+            let startX, startY, initialX = 0, initialY = 0;
             
             mainImage.addEventListener('mousedown', dragStart);
             mainImage.addEventListener('touchstart', dragStart);
@@ -1208,17 +1236,6 @@
                 // ドラッグ終了後、再びトランジションを有効化
                 mainImage.style.transition = 'transform 0.3s ease';
             }
-            
-            // 書簡選択
-            document.getElementById('letter-select').addEventListener('change', function() {
-                // 実際のアプリでは、選択した書簡に応じて内容を変更する処理をここに記述
-                // このデモでは何もしませんが、実際のアプリケーションでは
-                // 選択した値に応じて適切な書簡データを読み込む処理が必要です
-                const selectedValue = this.value;
-                console.log('選択された書簡: ' + selectedValue);
-                
-                // 選択した値に応じて異なる書簡を表示する処理をここに記述
-            });
         });
     </script>
 </body>
