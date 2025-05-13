@@ -33,111 +33,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
-            top: 0 !important; /* Google翻訳の余分なスタイルをリセット */
-            position: static !important; /* 翻訳時の位置ずれを防止 */
-        }
-        
-        /* 翻訳された要素のスタイル修正 */
-        .translated-content * {
-            font-family: 'Noto Sans JP', 'Inter', sans-serif !important;
-        }
-        
-        /* Google翻訳要素の非表示と調整 */
-        .goog-te-banner-frame,
-        .skiptranslate,
-        .goog-te-gadget-icon,
-        .goog-te-menu-value span:nth-child(3),
-        .goog-te-menu-value span:nth-child(5) {
-            display: none !important;
-        }
-        
-        /* Google翻訳ウィジェットを非表示 */
-        #google_translate_element {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-            height: 0;
-            overflow: hidden;
-        }
-        
-        /* 翻訳後のスタイル調整（レイアウト崩れ防止） */
-        .goog-text-highlight {
-            background-color: transparent !important;
-            box-shadow: none !important;
-        }
-        
-        /* 言語選択のカスタムスタイル */
-        #custom-translate-wrapper {
-            position: relative;
-            z-index: 9999;
-        }
-        
-        #language-selector {
-            display: flex;
-            align-items: center;
-            height: 28px;
-            padding: 0 10px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        #language-selector:hover {
-            border-color: var(--primary-color);
-            background-color: #f8fafc;
-        }
-        
-        #language-selector-icon {
-            color: var(--primary-color);
-            margin-right: 5px;
-            font-size: 14px;
-        }
-        
-        #language-selector-text {
-            font-size: 12px;
-            font-weight: 500;
-            color: #4b5563;
-        }
-        
-        #language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 4px;
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            width: 160px;
-            z-index: 10000;
-            overflow: hidden;
-            display: none;
-        }
-        
-        #language-dropdown.show {
-            display: block;
-        }
-        
-        .language-option {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .language-option:hover {
-            background: #f1f5f9;
-            color: var(--primary-color);
-        }
-        
-        .language-flag {
-            width: 20px;
-            height: 14px;
-            margin-right: 8px;
-            object-fit: cover;
-            border-radius: 2px;
         }
         
         /* ローディング画面 */
@@ -535,62 +430,7 @@
         .skip-link:focus {
             top: 0;
         }
-        
-        /* 翻訳フィードバック表示 */
-        #translation-feedback {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 14px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            z-index: 9999;
-        }
-        
-        #translation-feedback.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
-    
-    <!-- 即時実行のGlobal Style Fix -->
-    <script>
-    (function() {
-        // Google翻訳が引き起こすスタイルの問題を修正
-        document.documentElement.style.overflowX = 'hidden';
-        
-        // スタイル調整用のCSS追加
-        const styleEl = document.createElement('style');
-        styleEl.textContent = `
-            body {
-                top: 0 !important;
-                position: static !important;
-            }
-            
-            .goog-te-banner-frame {
-                display: none !important;
-            }
-            
-            .goog-logo-link, .goog-logo-link:link, .goog-logo-link:visited, .goog-logo-link:hover, .goog-logo-link:active {
-                display: none !important;
-            }
-            
-            .goog-te-gadget {
-                font-size: 0 !important;
-            }
-            
-            .goog-te-gadget span, .goog-te-gadget img {
-                display: none !important;
-            }
-        `;
-        document.head.appendChild(styleEl);
-    })();
-    </script>
+        </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
     <!-- ローディング画面 -->
@@ -601,9 +441,6 @@
     
     <!-- プログレスバー -->
     <div class="progress-bar" id="progressBar"></div>
-    
-    <!-- 翻訳フィードバック表示 -->
-    <div id="translation-feedback"></div>
     
     <!-- スキップリンク (アクセシビリティ) -->
     <a href="#main-content" class="skip-link">メインコンテンツへスキップ</a>
@@ -660,43 +497,8 @@
                 <!-- 右側のアクション -->
                 <div class="flex items-center space-x-4">
                     
-                    <!-- 新しい言語切り替え - カスタムUI -->
-                    <div id="custom-translate-wrapper">
-                        <div id="language-selector">
-                            <i id="language-selector-icon" class="fas fa-globe"></i>
-                            <span id="language-selector-text">言語</span>
-                        </div>
-                        <div id="language-dropdown">
-                            <div class="language-option" data-lang="ja">
-                                <img src="https://flagsapi.com/JP/flat/24.png" alt="日本語" class="language-flag">
-                                日本語
-                            </div>
-                            <div class="language-option" data-lang="en">
-                                <img src="https://flagsapi.com/GB/flat/24.png" alt="English" class="language-flag">
-                                English
-                            </div>
-                            <div class="language-option" data-lang="zh-CN">
-                                <img src="https://flagsapi.com/CN/flat/24.png" alt="中文" class="language-flag">
-                                中文 (简体)
-                            </div>
-                            <div class="language-option" data-lang="ko">
-                                <img src="https://flagsapi.com/KR/flat/24.png" alt="한국어" class="language-flag">
-                                한국어
-                            </div>
-                            <div class="language-option" data-lang="fr">
-                                <img src="https://flagsapi.com/FR/flat/24.png" alt="Français" class="language-flag">
-                                Français
-                            </div>
-                            <div class="language-option" data-lang="es">
-                                <img src="https://flagsapi.com/ES/flat/24.png" alt="Español" class="language-flag">
-                                Español
-                            </div>
-                        </div>
-                    </div>
+
                     
-                    <!-- Googleのウィジェット（非表示、裏で動作） -->
-                    <div id="google_translate_element"></div>
-            
                     <!-- モバイルメニューボタン -->
                     <button id="mobileMenuButton" class="lg:hidden p-2 text-gray-600 hover:text-blue-700">
                         <i class="fas fa-bars text-xl"></i>
@@ -775,7 +577,7 @@
                 <div class="max-w-4xl mx-auto">
                     <p class="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
                         里庄町歴史民俗資料館で所蔵・展示している貴重な資料等をWeb上で閲覧することができるデジタルミュージアムです。
-                        他言語対応やバーチャルツアー機能を実装し、より多くの方に里庄町歴史民俗資料館の魅力を発信しています。
+                        バーチャルツアー機能や検索システムを実装し、より多くの方に里庄町歴史民俗資料館の魅力を発信しています。
                     </p>
                     <p class="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 leading-relaxed">
                        里庄町歴史民俗資料館の所蔵資料をご自宅等でもご覧いただけるよう、デジタルアーカイブを進めています。
@@ -783,7 +585,7 @@
                 </div>
             </div>
         </section>
-
+        
         <!-- 特集展示 -->
         <section id="exhibitions" class="py-12 sm:py-16 bg-gray-50">
             <div class="container mx-auto px-4">
@@ -868,8 +670,250 @@
             </div>
         </section>
         
-        <!-- コンテンツ省略... -->
+        <!-- 当館の特徴セクション -->
+        <section class="py-12 sm:py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">里庄町の歴史民俗資料館を<br class="sm:hidden">世界へ発信</h2>
+                        <p class="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
+                            私たちは、里庄町歴史民俗資料館の貴重な文化遺産を最新技術でデジタル化し、
+                            世界中の人々が自由にアクセスできる環境を提供しています。
+                            歴史的な価値を未来へ継承する架け橋として活動しています。
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                                    <i class="fas fa-globe-asia text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-sm sm:text-base mb-1">世界へ向けた発信</h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm">世界中の人々が自由にアクセスできる環境を提供しています。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                                    <i class="fas fa-graduation-cap text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-sm sm:text-base mb-1">教育プログラム</h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm">学校・研究機関との連携</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                                    <i class="fas fa-handshake text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-sm sm:text-base mb-1">地域との連携</h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm">地域の方々と密着した取り組み</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative mt-6 lg:mt-0">
+                        <img src="mainff1.jpeg" alt="写真１" class="rounded-lg shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </section>
         
+        <!-- ニュースセクション -->
+        <section class="py-12 sm:py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center mb-6 sm:mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-bold">最新情報</h2>
+                    <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold hidden md:inline-flex items-center text-sm sm:text-base">
+                        すべて見る
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <article class="card rounded-lg overflow-hidden">
+                        <img src="mainff2.jpeg" alt="写真１" class="w-full h-40 sm:h-48 object-cover">
+                        <div class="p-4 sm:p-6">
+                            <span class="text-xs text-blue-600 font-semibold">イベント</span>
+                            <h3 class="text-lg sm:text-xl font-bold mt-2 mb-2">令和７年度　里庄町歴史講座</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 mb-2">小川郷太郎の人生-グローバルな学びと政治への貢献-</p>
+                            <ul class="text-xs sm:text-sm text-gray-600 mb-3 list-disc pl-5">
+                                <li class="mb-1">講師：鎮西学院大学経済政策学科(教授)　吉野浩司氏</li>
+                                <li class="mb-1">日時：2025年6月23日（月）13:30〜14:30</li>
+                                <li class="mb-1">場所：里庄総合文化ホール「フロイデ」大ホール</li>
+                            </ul>
+                            <time class="text-gray-500 text-xs">投稿日：2025年5月12日</time>
+                        </div>
+                    </article>
+                    
+                    <article class="card rounded-lg overflow-hidden">
+                        <img src="mainff5.png" alt="写真2" class="w-full h-40 sm:h-48 object-cover">
+                        <div class="p-4 sm:p-6">
+                            <span class="text-xs text-orange-600 font-semibold">お知らせ</span>
+                            <h3 class="text-lg sm:text-xl font-bold mt-2 mb-2">里庄町歴史民俗資料館デジタルミュージアムを作成しました</h3>
+                            <p class="text-xs sm:text-sm text-gray-600 mb-4">里庄町歴史民俗資料館デジタルミュージアムを非公開リンクで公開しました。多くの方々に向けて、里庄町の歴史的・文化的資産の魅力を発信しています。
+                            </p>
+                            <time class="text-gray-500 text-xs">投稿日：2025年5月12日</time>
+                        </div>
+                    </article>
+
+                     <article class="card rounded-lg overflow-hidden">
+                        <img src="KatsujiX.png" alt="写真2" class="w-full h-40 sm:h-48 object-cover">
+                        <div class="p-4 sm:p-6">
+                            <span class="text-xs text-orange-600 font-semibold">関連サイト</span>
+                            <h3 class="text-lg sm:text-xl font-bold mt-2 mb-2">KatsujiRingX(デジタル化サポート)
+                            </h3>
+                            <p class="text-xs sm:text-sm text-gray-600 mb-4">KatsujiRingXは日本語の縦書きによる活字化を効率的にサポートする最新のWebアプリケーションです。「みんなの活字化広場」のDNAを受け継ぎ、より最適なツールに進化を遂げました。
+                            </p>
+                            <time class="text-gray-500 text-xs">投稿日：2025年5月13日</time>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 資料検索スペシャルコンテンツ -->
+        <section class="py-12 sm:py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">資料検索</h2>
+                    <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
+                        所蔵資料をキーワード、分野、ハッシュタグから検索できます。<br>
+                        デジタル化された貴重な資料をお探しください。
+                    </p>
+                </div>
+                
+                <!-- 検索フォーム -->
+                <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-4 sm:p-8 mb-8 sm:mb-10">
+                    <form action="search.html" method="get" class="space-y-4 sm:space-y-6">
+                        <!-- キーワード検索 -->
+                        <div>
+                            <label for="search-keyword" class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">キーワードから探す</label>
+                            <div class="flex">
+                                <input type="text" id="search-keyword" name="keyword" placeholder="検索キーワードを入力" 
+                                    class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2 rounded-r-lg font-semibold transition-colors text-sm">
+                                    <i class="fas fa-search mr-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- ハッシュタグ選択 -->
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">人気のハッシュタグから探す</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" class="tag-button bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors" data-tag="江戸時代">
+                                    #江戸時代
+                                </button>
+                                <button type="button" class="tag-button bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors" data-tag="小川郷太郎">
+                                    #小川郷太郎
+                                </button>
+                                <button type="button" class="tag-button bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors" data-tag="伝統工芸">
+                                    #伝統工芸
+                                </button>
+                                <button type="button" class="tag-button bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors" data-tag="古墳">
+                                    #古墳
+                                </button>
+                                <button type="button" class="tag-button bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors" data-tag="農具">
+                                    #農具
+                                </button>
+                                <button type="button" class="tag-button bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors" data-tag="神社仏閣">
+                                    #神社仏閣
+                                </button>
+                                <button type="button" class="tag-button bg-gray-100 hover:bg-blue-100 hover:text-blue-600 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition-colors" data-tag="明治時代">
+                                    #明治時代
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- 資料分野から探す -->
+                <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">資料分野から探す</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- 民具資料 -->
+                    <div class="card rounded-xl overflow-hidden group cursor-pointer">
+                        <div class="relative h-48 sm:h-64 overflow-hidden">
+                            <img src="/api/placeholder/600/400" alt="民具資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-lg sm:text-xl font-bold mt-2">民具資料</h3>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <p class="text-xs sm:text-sm text-gray-600 mb-4">
+                                里庄町の人々の暮らしを支えてきた生活道具や農機具など、民俗文化に関する資料を探せます。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <a href="search.html?type=folk" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+                                    このカテゴリで検索
+                                    <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 考古資料 -->
+                    <div class="card rounded-xl overflow-hidden group cursor-pointer">
+                        <div class="relative h-48 sm:h-64 overflow-hidden">
+                            <img src="/api/placeholder/600/400" alt="考古資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-lg sm:text-xl font-bold mt-2">考古資料</h3>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <p class="text-xs sm:text-sm text-gray-600 mb-4">
+                               ３Dコレクションです。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <a href="search.html?type=archeology" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+                                    このカテゴリで検索
+                                    <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 歴史資料 -->
+                    <div class="card rounded-xl overflow-hidden group cursor-pointer">
+                        <div class="relative h-48 sm:h-64 overflow-hidden">
+                            <img src="id1ddw.png" alt="歴史資料" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-lg sm:text-xl font-bold mt-2">歴史資料</h3>
+                            </div>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <p class="text-xs sm:text-sm text-gray-600 mb-4">
+                                古文書など、郷土の偉人に関わる品々など、里庄町の歴史を物語る貴重な資料を閲覧できます。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <a href="search.html?type=historical" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+                                    このカテゴリで検索
+                                    <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+   
+        
+        <!-- パートナーセクション -->
+        <section class="py-10 sm:py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">提携機関・スポンサー</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 sm:gap-8 items-center">
+                    <div class="flex items-center justify-center p-4">
+                        <img src="katsujiRingX.png" alt="katsujiRingX技術サポート" class="h-8 sm:h-12 object-contain filter grayscale hover:grayscale-0 transition-all">
+                    </div>
+                    <div class="flex items-center justify-center p-4">
+                        <img src="KatsujiX.png" alt="katsujiRingX技術サポート" class="h-8 sm:h-12 object-contain filter grayscale hover:grayscale-0 transition-all">
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     
     <!-- フッター -->
@@ -941,402 +985,165 @@
         </div>
     </footer>
     
-    <!-- 最適化された多言語対応スクリプト -->
+    <!-- JavaScript -->
     <script>
-    // グローバル翻訳状態
-    const translationState = {
-        currentLang: 'ja',
-        isTranslating: false
-    };
-    
-    // Google翻訳初期化
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'ja',
-            includedLanguages: 'en,zh-CN,ko,fr,es',
-            autoDisplay: false,
-            layout: google.translate.TranslateElement.FloatPosition.TOP_RIGHT
-        }, 'google_translate_element');
-        
-        // 初期化後の処理
-        setTimeout(() => {
-            setupTranslationUI();
-            hideGoogleTranslateElements();
-            checkURLForTranslation();
-        }, 1000);
-    }
-    
-    // URLから翻訳状態を確認
-    function checkURLForTranslation() {
-        const hash = window.location.hash;
-        if (hash && hash.indexOf('googtrans') > -1) {
-            try {
-                const langCode = hash.split('|')[1].replace(')', '');
-                if (langCode && langCode !== 'ja') {
-                    translationState.currentLang = langCode;
-                    updateLanguageSelectorText(langCode);
-                }
-            } catch (e) {
-                console.error('Error parsing translation hash:', e);
-            }
-        }
-    }
-    
-    // 翻訳UI設定
-    function setupTranslationUI() {
-        const languageSelector = document.getElementById('language-selector');
-        const languageDropdown = document.getElementById('language-dropdown');
-        const languageOptions = document.querySelectorAll('.language-option');
-        
-        if (!languageSelector || !languageDropdown) return;
-        
-        // セレクタクリック時の処理
-        languageSelector.addEventListener('click', function(e) {
-            e.stopPropagation();
-            languageDropdown.classList.toggle('show');
-        });
-        
-        // 言語選択時の処理
-        languageOptions.forEach(option => {
-            option.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const langCode = this.getAttribute('data-lang');
-                
-                // 既に選択中の言語なら何もしない
-                if (langCode === translationState.currentLang) {
-                    languageDropdown.classList.remove('show');
-                    return;
-                }
-                
-                // UI更新
-                updateLanguageSelectorText(langCode);
-                languageDropdown.classList.remove('show');
-                
-                // 翻訳実行
-                changeLanguage(langCode);
-            });
-        });
-        
-        // ドキュメントクリックでドロップダウンを閉じる
-        document.addEventListener('click', function() {
-            languageDropdown.classList.remove('show');
-        });
-    }
-    
-    // 言語セレクタのテキスト更新
-    function updateLanguageSelectorText(langCode) {
-        const option = document.querySelector(`.language-option[data-lang="${langCode}"]`);
-        if (option) {
-            document.getElementById('language-selector-text').textContent = option.textContent.trim();
-        }
-    }
-    
-    // フィードバック表示
-    function showTranslationFeedback(message, isSuccess = true) {
-        const feedback = document.getElementById('translation-feedback');
-        if (!feedback) return;
-        
-        feedback.textContent = message;
-        feedback.className = isSuccess ? 'show bg-green-600' : 'show bg-red-600';
-        
-        setTimeout(() => {
-            feedback.className = '';
-        }, 3000);
-    }
-    
-    // 言語変更処理（完全リファクタリング）
-    function changeLanguage(langCode) {
-        translationState.isTranslating = true;
-        
-        // 日本語への切り替え（リセット）
-        if (langCode === 'ja') {
-            resetToJapanese();
-            return;
-        }
-        
-        // 他言語への翻訳
-        applyTranslation(langCode);
-    }
-    
-    // 日本語にリセット
-    function resetToJapanese() {
-        // ステータス更新
-        translationState.currentLang = 'ja';
-        showTranslationFeedback('日本語に切り替えています...');
-        
-        // 1. Cookieをクリア
-        clearTranslationCookies();
-        
-        // 2. URLハッシュをクリア
-        if (window.location.hash.includes('googtrans')) {
-            history.pushState('', document.title, window.location.pathname + window.location.search);
-        }
-        
-        // 3. その他のリセット方法
-        try {
-            // コンボボックスリセット
-            const select = document.querySelector('.goog-te-combo');
-            if (select) {
-                select.value = 'ja';
-                select.dispatchEvent(new Event('change'));
-            }
-        } catch (e) {
-            console.error('Error resetting translation:', e);
-        }
-        
-        // 最終手段：ページリロード
-        setTimeout(() => {
-            // 翻訳状態確認
-            if (document.documentElement.lang !== 'ja' || document.body.classList.contains('translated-rtl')) {
-                window.location.reload();
-            } else {
-                showTranslationFeedback('日本語表示に戻りました');
-                translationState.isTranslating = false;
-            }
-        }, 500);
-    }
-    
-    // 翻訳実行
-    function applyTranslation(langCode) {
-        // ステータス更新
-        translationState.currentLang = langCode;
-        showTranslationFeedback(`${getLanguageName(langCode)}に翻訳しています...`);
-        
-        // 1. 直接Cookieを設定
-        const domain = location.hostname.split('.').slice(-2).join('.');
-        const cookieDomain = (domain.indexOf("localhost") === -1) ? domain : "localhost";
-        document.cookie = `googtrans=/ja/${langCode}; path=/; domain=.${cookieDomain}`;
-        document.cookie = `googtrans=/ja/${langCode}; path=/; domain=${cookieDomain}`;
-        
-        // 2. URLハッシュを設定
-        const newHash = `#googtrans(ja|${langCode})`;
-        window.location.hash = newHash;
-        
-        // 3. Google翻訳のセレクタを操作
-        try {
-            const select = document.querySelector('.goog-te-combo');
-            if (select) {
-                select.value = langCode;
-                select.dispatchEvent(new Event('change'));
-            }
-        } catch (e) {
-            console.error('Error applying translation:', e);
-        }
-        
-        // 翻訳完了確認
-        setTimeout(() => {
-            // 翻訳状態チェック
-            const isTranslated = window.location.hash.includes(langCode) || 
-                                 document.documentElement.lang !== 'ja' ||
-                                 document.cookie.includes(langCode);
-            
-            if (isTranslated) {
-                showTranslationFeedback(`${getLanguageName(langCode)}に翻訳しました`);
-            } else {
-                showTranslationFeedback('翻訳に失敗しました。再試行してください', false);
-                console.error('Translation verification failed for', langCode);
-            }
-            
-            hideGoogleTranslateElements();
-            translationState.isTranslating = false;
-        }, 1000);
-    }
-    
-    // 翻訳Cookieをクリア
-    function clearTranslationCookies() {
-        const domains = [
-            location.hostname,
-            `.${location.hostname}`,
-            location.hostname.split('.').slice(-2).join('.'),
-            `.${location.hostname.split('.').slice(-2).join('.')}`
-        ];
-        
-        const paths = ['/', '/index.html'];
-        
-        domains.forEach(domain => {
-            paths.forEach(path => {
-                document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path}; domain=${domain};`;
-            });
-        });
-    }
-    
-    // 言語コードから言語名を取得
-    function getLanguageName(langCode) {
-        const languages = {
-            'ja': '日本語',
-            'en': '英語',
-            'zh-CN': '中国語',
-            'ko': '韓国語',
-            'fr': 'フランス語',
-            'es': 'スペイン語'
-        };
-        return languages[langCode] || langCode;
-    }
-    
-    // Google翻訳の余分な要素を非表示
-    function hideGoogleTranslateElements() {
-        // バナーフレーム非表示
-        const bannerFrame = document.querySelector('.goog-te-banner-frame');
-        if (bannerFrame) bannerFrame.style.display = 'none';
-        
-        // Skipクラス要素非表示
-        const skipElements = document.querySelectorAll('.skiptranslate');
-        skipElements.forEach(el => el.style.display = 'none');
-        
-        // body調整
-        document.body.style.top = '0px';
-        document.body.style.position = 'static';
-        
-        // その他の翻訳UI要素非表示
-        const gadgets = document.querySelectorAll('.goog-te-gadget');
-        gadgets.forEach(el => {
-            const span = el.querySelector('span');
-            if (span) span.style.display = 'none';
-        });
-    }
-    
-    // MutationObserverでDOM変更監視
-    function watchForTranslationChanges() {
-        const observer = new MutationObserver(mutations => {
-            mutations.forEach(mutation => {
-                if (mutation.type === 'childList' || mutation.type === 'attributes') {
-                    // 翻訳UIをすぐに非表示
-                    hideGoogleTranslateElements();
-                    
-                    // レイアウト崩れ修正
-                    document.body.style.top = '0px';
-                    document.body.style.position = 'static';
-                }
-            });
-        });
-        
-        // bodyの監視を開始
-        observer.observe(document.body, { 
-            childList: true, 
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['style', 'class']
-        });
-    }
-    
-    // 読み込み完了時の処理
-    window.addEventListener('load', () => {
-        // ローディング画面
-        const loadingScreen = document.getElementById('loadingScreen');
-        setTimeout(() => {
-            loadingScreen.style.opacity = '0';
+        // ローディング画面の制御
+       window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loadingScreen');
             setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 500);
-        }, 1000);
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 1000);
+            
+            // スライダーの初期化も追加
+            initSlider();
+        });
         
-        // スライダー初期化
-        initSlider();
-        
-        // 翻訳UI監視開始
-        watchForTranslationChanges();
-        
-        // 定期的に翻訳UI非表示確認
-        setInterval(hideGoogleTranslateElements, 1000);
-    });
-    
-    // スライダー処理
-    let slideIndex = 1;
-    let slideInterval;
-    
-    function currentSlide(n) {
-        showSlide(slideIndex = n);
-    }
-    
-    function showSlide(n) {
-        let slides = document.getElementsByClassName("slide");
-        let dots = document.getElementsByClassName("dot");
-        
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].classList.remove('active');
+        // スライダー機能
+        let slideIndex = 1;
+        let slideInterval;
+
+        // 特定のスライドを表示
+        function currentSlide(n) {
+            showSlide(slideIndex = n);
         }
-        
-        for (let i = 0; i < dots.length; i++) {
-            dots[i].classList.remove('active');
+
+        // スライドを表示
+        function showSlide(n) {
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+            
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            // すべてのスライドを非表示にする
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+            }
+            
+            // すべてのドットを非アクティブにする
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].classList.remove('active');
+            }
+            
+            // 現在のスライドを表示し、対応するドットをアクティブにする
+            slides[slideIndex - 1].classList.add('active');
+            dots[slideIndex - 1].classList.add('active');
         }
-        
-        slides[slideIndex - 1].classList.add('active');
-        dots[slideIndex - 1].classList.add('active');
-    }
-    
-    function nextSlide() {
-        showSlide(slideIndex += 1);
-    }
-    
-    function startAutoSlide() {
-        slideInterval = setInterval(nextSlide, 5000);
-    }
-    
-    function stopAutoSlide() {
-        clearInterval(slideInterval);
-    }
-    
-    function initSlider() {
-        showSlide(slideIndex);
-        startAutoSlide();
-        
-        const sliderSection = document.querySelector('.hero-slider');
-        if (sliderSection) {
+
+        // 次のスライドに移動
+        function nextSlide() {
+            showSlide(slideIndex += 1);
+        }
+
+        // 自動スライド機能
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 5000); // 5秒ごとに次のスライドへ
+        }
+
+        // 自動スライドを停止
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
+
+        // スライダーの初期化
+        function initSlider() {
+            showSlide(slideIndex);
+            startAutoSlide();
+            
+            // スライダーセクションにマウスが入ったら自動スライドを停止
+            const sliderSection = document.querySelector('.hero-slider');
             sliderSection.addEventListener('mouseenter', stopAutoSlide);
             sliderSection.addEventListener('mouseleave', startAutoSlide);
         }
-    }
-    
-    // スクロールプログレスバー
-    window.addEventListener('scroll', () => {
-        const progressBar = document.getElementById('progressBar');
-        if (!progressBar) return;
+
+        // ページ読み込み時にスライダーを初期化
+        window.addEventListener('load', initSlider);
         
-        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPosition = window.scrollY;
-        const progress = (scrollPosition / scrollHeight) * 100;
-        progressBar.style.width = progress + '%';
-    });
-    
-    // Cookie同意バナー
-    function showCookieBanner() {
-        const banner = document.getElementById('cookieBanner');
-        if (!banner) return;
+        // スクロールプログレスバー
+        window.addEventListener('scroll', () => {
+            const progressBar = document.getElementById('progressBar');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPosition = window.scrollY;
+            const progress = (scrollPosition / scrollHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
         
-        if (!localStorage.getItem('cookieConsent')) {
-            setTimeout(() => {
-                banner.classList.add('show');
-            }, 2000);
+        // Cookie同意バナー
+        function showCookieBanner() {
+            const banner = document.getElementById('cookieBanner');
+            if (!localStorage.getItem('cookieConsent')) {
+                setTimeout(() => {
+                    banner.classList.add('show');
+                }, 2000);
+            }
         }
-    }
+        
+        function acceptCookies() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+        
+        function declineCookies() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+        
+        showCookieBanner();
     
-    function acceptCookies() {
-        localStorage.setItem('cookieConsent', 'accepted');
-        document.getElementById('cookieBanner').classList.remove('show');
-    }
-    
-    function declineCookies() {
-        localStorage.setItem('cookieConsent', 'declined');
-        document.getElementById('cookieBanner').classList.remove('show');
-    }
-    
-    showCookieBanner();
-    
-    // モバイルメニュー
-    const mobileMenuButton = document.getElementById('mobileMenuButton');
-    const mobileMenu = document.getElementById('mobileMenu');
-    
-    if (mobileMenuButton && mobileMenu) {
+        
+        // モバイルメニュー
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-    }
+
+        // タグボタンのクリックイベント
+        document.querySelectorAll('.tag-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const tagValue = this.getAttribute('data-tag');
+                window.location.href = `search.html?keyword=${encodeURIComponent(tagValue)}`;
+            });
+        });
+        
+        // カウンターアニメーション
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.ceil(current).toLocaleString();
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCounter();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(counter);
+            });
+        }
+        
+        animateCounters();
+
     </script>
-    
-    <!-- Google翻訳スクリプト -->
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 </body>
 </html>
