@@ -142,17 +142,17 @@
         
         /* 画像ツールバー */
         .image-toolbar {
-            position: absolute;
-            bottom: 16px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 16px;
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(4px);
             border-radius: 9999px;
             padding: 0.5rem;
             display: flex;
             gap: 8px;
-            z-index: 20;
+            position: relative;
         }
         
         .tool-button {
@@ -312,76 +312,52 @@
             color: #9ca3af;
         }
         
-        /* 縦書きスタイル - 改良版 */
-        .vertical-text {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            overflow-x: auto;
-            overflow-y: hidden;
-            padding: 1.5rem;
-            height: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 2;
-            letter-spacing: 0.05em;
-            text-align: justify;
-            font-family: 'Noto Serif JP', serif;
-            font-size: 1.1rem;
-            color: #1a202c;
-            background-color: #fffaf0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border-radius: 0.5rem;
-        }
-        
-        .vertical-text p {
-            margin-left: 2rem;
-        }
-        
-        .vertical-text-container {
-            background-color: #f9f5f1;
-            border-radius: 0.5rem;
-            width: 100%;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 1rem 0;
-            position: relative;
-        }
-
-        /* 縦書き用の余白設定 */
-        .vertical-text-block {
-            margin-left: 2rem;
-        }
-        
-        /* 縦書き表示のコントロール */
-        .transcription-controls {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 1rem;
-            align-items: center;
-        }
-        
-        .text-size-control {
-            display: flex;
+        /* 原本・翻刻切り替えボタン */
+        .view-mode-switch {
+            display: inline-flex;
             align-items: center;
             background-color: #f3f4f6;
-            border-radius: 9999px;
+            border-radius: 12px;
             padding: 0.25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         
-        .text-size-control button {
-            padding: 0.5rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .view-mode-switch button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
             transition: all 0.2s;
-            font-size: 0.75rem;
-            width: 32px;
-            height: 32px;
+            position: relative;
         }
         
-        .text-size-control button:hover {
+        .view-mode-switch button.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+        }
+        
+        .view-mode-switch button:not(.active) {
+            color: #6b7280;
+        }
+        
+        .view-mode-switch button:not(.active):hover {
             background-color: #e5e7eb;
+        }
+        
+        /* 翻刻表示エリア */
+        .transcription-display {
+            display: block;
+        }
+        
+        .transcription-display.hidden {
+            display: none !important;
+        }
+        
+        /* 汎用hiddenクラス */
+        .hidden {
+            display: none !important;
         }
         
         .document-card {
@@ -445,88 +421,6 @@
             -webkit-box-orient: vertical;
         }
         
-        /* 縦書き用フォント読み込み */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600&display=swap');
-        
-        /* タブ切り替えボタン */
-        .direction-switch {
-            display: inline-flex;
-            align-items: center;
-            background-color: #f3f4f6;
-            border-radius: 9999px;
-            padding: 0.25rem;
-            margin-bottom: 1rem;
-        }
-        
-        .direction-switch button {
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: medium;
-            transition: all 0.2s;
-        }
-        
-        .direction-switch button.active {
-            background-color: white;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        }
-        
-        /* 押印シミュレーション */
-        .seal {
-            color: #dd2244;
-            font-family: serif;
-            border: 2px solid #dd2244;
-            border-radius: 50%;
-            width: 3.5rem;
-            height: 3.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: rotate(15deg);
-            margin: 1rem;
-            text-align: center;
-            line-height: 1;
-            padding: 0.25rem;
-        }
-        
-        .vertical-text .seal {
-            transform: rotate(5deg);
-            margin-bottom: 2rem;
-        }
-
-        /* ハイライト部分のスタイル */
-        .highlight {
-            background-color: #fffbeb;
-            padding: 0.5rem;
-            margin: 0.25rem 0;
-        }
-
-        /* ページネーション */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-
-        .pagination button {
-            background-color: #f3f4f6;
-            border-radius: 0.25rem;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.875rem;
-            color: #374151;
-            transition: all 0.2s;
-        }
-
-        .pagination button.active {
-            background-color: #3b82f6;
-            color: white;
-        }
-
-        .pagination button:hover:not(.active) {
-            background-color: #e5e7eb;
-        }
-
         /* リストスタイル改善 */
         .document-list {
             display: flex;
@@ -543,6 +437,19 @@
             font-size: 0.75rem;
             color: #6b7280;
             display: none; /* 通常は非表示 */
+        }
+
+        /* 原本表示エリア */
+        .original-display {
+            display: block;
+        }
+
+        .original-display.hidden {
+            display: none;
+        }
+
+        .transcription-display.hidden {
+            display: none;
         }
     </style>
 </head>
@@ -592,18 +499,31 @@
                 <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">歴史資料</span>
             </div>
             <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold">小川郷太郎(仮名)</h1>
-            </h1>
         </div>
         
         <!-- 画像とメタデータのグリッド -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 mb-10">
             <!-- 画像ビューアエリア -->
             <div class="lg:col-span-8">
-                <!-- 画像表示エリア -->
-                <div class="image-viewer">
-                    <div id="panZoomContainer" class="w-full h-full">
-                        <img src="/api/placeholder/800/600?text=初期画像" alt="書簡画像" id="mainImage" class="w-full h-full object-contain">
+                <!-- 原本・翻刻切り替えボタン -->
+                <div class="view-mode-switch">
+                    <button id="originalMode" class="active">
+                        <i class="fas fa-image mr-2"></i>原本
+                    </button>
+                    <button id="transcriptionMode">
+                        <i class="fas fa-font mr-2"></i>翻刻
+                    </button>
+                </div>
+
+                <!-- 原本表示エリア -->
+                <div id="originalDisplay" class="original-display">
+                    <!-- 画像表示エリア -->
+                    <div class="image-viewer">
+                        <div id="panZoomContainer" class="w-full h-full">
+                            <img src="/api/placeholder/800/600?text=初期画像" alt="書簡画像" id="mainImage" class="w-full h-full object-contain">
+                        </div>
                     </div>
+                    
                     <!-- 画像操作ツールバー -->
                     <div class="image-toolbar">
                         <button class="tool-button" id="zoomIn" title="拡大"><i class="fas fa-search-plus"></i></button>
@@ -613,23 +533,52 @@
                         <button class="tool-button" id="rotateRight" title="右に回転"><i class="fas fa-redo"></i></button>
                         <button class="tool-button" id="fullScreen" title="全画面表示"><i class="fas fa-expand"></i></button>
                     </div>
-                </div>
-                
-                <!-- デバッグ情報 (開発時のみ表示) -->
-                <div class="debug-info" id="debugInfo">
-                    画像読み込み状態: <span id="loadStatus">未読み込み</span>
-                </div>
-                
-                <!-- サムネイル -->
-                <div class="thumbnail-gallery mt-4">
-                    <div class="thumbnail active" id="thumbnail1">
-                        <img src="id1pic.JPG" alt="原本" data-full="/api/placeholder/800/600?text=書簡1">
+                    
+                    <!-- デバッグ情報 (開発時のみ表示) -->
+                    <div class="debug-info" id="debugInfo">
+                        画像読み込み状態: <span id="loadStatus">未読み込み</span>
                     </div>
-                    <div class="thumbnail" id="thumbnail2">
-                        <img src="id1pic2.JPG" alt="原本裏" data-full="/api/placeholder/800/600?text=書簡2">
+                    
+                    <!-- サムネイル（原本のみ） -->
+                    <div class="thumbnail-gallery mt-4" id="thumbnailGallery">
+                        <div class="thumbnail active" id="thumbnail1">
+                            <img src="id1pic.JPG" alt="原本" data-full="/api/placeholder/800/600?text=書簡1">
+                        </div>
+                        <div class="thumbnail" id="thumbnail2">
+                            <img src="id1pic2.JPG" alt="原本裏" data-full="/api/placeholder/800/600?text=書簡2">
+                        </div>
+                        <div class="thumbnail" id="thumbnail3">
+                            <img src="id1ddw.png" alt="翻刻" data-full="/api/placeholder/800/600?text=書簡3">
+                        </div>
                     </div>
-                    <div class="thumbnail" id="thumbnail3">
-                        <img src="id1ddw.png" alt="翻刻" data-full="/api/placeholder/800/600?text=書簡3">
+                </div>
+
+                <!-- 翻刻表示エリア（画像対応） -->
+                <div id="transcriptionDisplay" class="transcription-display hidden">
+                    <!-- 翻刻用画像表示エリア -->
+                    <div class="image-viewer">
+                        <div id="transcriptionPanZoomContainer" class="w-full h-full">
+                            <img src="id1ddw.png" alt="翻刻画像" id="transcriptionImage" class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                    
+                    <!-- 翻刻用画像操作ツールバー -->
+                    <div class="image-toolbar">
+                        <button class="tool-button" id="transcriptionZoomIn" title="拡大"><i class="fas fa-search-plus"></i></button>
+                        <button class="tool-button" id="transcriptionZoomOut" title="縮小"><i class="fas fa-search-minus"></i></button>
+                        <button class="tool-button" id="transcriptionFitToScreen" title="画面に合わせる"><i class="fas fa-compress-arrows-alt"></i></button>
+                        <button class="tool-button" id="transcriptionRotateLeft" title="左に回転"><i class="fas fa-undo"></i></button>
+                        <button class="tool-button" id="transcriptionRotateRight" title="右に回転"><i class="fas fa-redo"></i></button>
+                        <button class="tool-button" id="transcriptionFullScreen" title="全画面表示"><i class="fas fa-expand"></i></button>
+                    </div>
+                    
+                    <!-- 翻刻画像情報 -->
+                    <div class="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-info-circle text-amber-600 mr-2"></i>
+                            <span class="text-sm text-amber-800 font-medium">翻刻画像</span>
+                        </div>
+                        <p class="text-sm text-amber-700 mt-1">この画像は原本を翻刻した内容が表示されています。</p>
                     </div>
                 </div>
                 
@@ -704,7 +653,6 @@
             <div class="border-b border-gray-200">
                 <div class="flex overflow-x-auto">
                     <button class="tab-button px-4 py-3 font-medium text-blue-600 border-b-2 border-blue-600 whitespace-nowrap" data-tab="tab-description">解説</button>
-                    <button class="tab-button px-4 py-3 font-medium text-gray-500 hover:text-blue-600 whitespace-nowrap" data-tab="tab-transcription">翻刻</button>
                     <button class="tab-button px-4 py-3 font-medium text-gray-500 hover:text-blue-600 whitespace-nowrap" data-tab="tab-gallery">詳細メタデータ</button>
                 </div>
             </div>
@@ -721,60 +669,7 @@
                     </div>
                 </div>
                 
-                <!-- 翻刻タブ（縦書き） - 改良版 -->
-                <div id="tab-transcription" class="tab-content">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-xl font-bold">翻刻</h2>
-                        
-                        <!-- 表示コントロール -->
-                        <div class="transcription-controls">
-                            <div class="text-size-control">
-                                <button id="decrease-font" title="文字サイズを小さく"><i class="fas fa-minus"></i></button>
-                                <span class="px-2 text-sm">文字サイズ</span>
-                                <button id="increase-font" title="文字サイズを大きく"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    
-                    <!-- 縦書きコンテンツ -->
-                    <div id="vertical-content" class="space-y-6 text-gray-800">
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <h3 class="text-lg font-semibold mb-2">🟥🟧🟨🟩🟦🟪</h3>
-                            
-                            <div class="vertical-text-container">
-                                <div class="vertical-text" id="vertical-text-element">
-                                    <div class="vertical-text-block">
-<ul>上海二着ス。</ul>
-<ul>記念ノ為二同行者二署名ヲ</ul>
-<ul>請ウテ送ル。</ul>
-<ul>法学士</ul>
-<ul>北田彦三郎</ul>
-<ul>工学士</ul>
-<ul>大橋多吉</ul>
-<ul>農学士</ul>
-<ul>八鍬儀七郎</ul>
-<ul>医士</ul>
-<ul>天町弘</ul>
-<ul>商</ul>
-<ul>木邑□玄</ul>
-<ul>陸軍一等軍医</ul>
-<ul>橋本監次郎</ul>
-<ul>横浜□□</ul>
-<ul>岡島寅次郎</ul>
-<ul>□機□□</ul>
-<ul>□□春太郎</ul>
-<ul>上様</ul>
-<ul>山本栄作</ul>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>   
-                </div>
-                
-                <!-- 詳細メタデータタブ - 追加 -->
+                <!-- 詳細メタデータタブ -->
                 <div id="tab-gallery" class="tab-content">
                     <h2 class="text-xl font-bold mb-6">詳細メタデータ</h2>
                     
@@ -869,77 +764,79 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- 資料デジタル化情報 - 改良版 -->
-<div class="mt-8">
-    <h3 class="text-lg font-semibold mb-4 pb-2 border-b border-blue-200">デジタル化・管理情報</h3>
-    
-    <!-- カード型レイアウトに変更 -->
-    <div class="grid grid-cols-1 gap-8">
-        <!-- デジタル化情報カード -->
-        <div class="bg-blue-50 rounded-lg p-6 shadow-sm border border-blue-100">
-            <h4 class="font-medium text-blue-800 mb-4 flex items-center">
-                <i class="fas fa-camera-retro mr-2"></i>デジタル化情報
-            </h4>
-            <table class="excel-table">
-                <tbody>
-                    <tr>
-                        <th class="w-1/3">撮影日</th>
-                        <td>２０２５年</td>
-                    </tr>
-                    <tr>
-                        <th>撮影機材</th>
-                        <td>記載なし</td>
-                    </tr>
-                    <tr>
-                        <th>解像度</th>
-                        <td>記載なし</td>
-                    </tr>
-                    <tr>
-                        <th>カラー情報</th>
-                        <td>記載なし</td>
-                    </tr>
-                    <tr>
-                        <th>ファイル形式</th>
-                        <td>JPEG</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- 権利・利用情報カード -->
-        <div class="bg-green-50 rounded-lg p-6 shadow-sm border border-green-100">
-            <h4 class="font-medium text-green-800 mb-4 flex items-center">
-                <i class="fas fa-copyright mr-2"></i>権利・利用情報
-            </h4>
-            <table class="excel-table">
-                <tbody>
-                    <tr>
-                        <th class="w-1/3">所有権</th>
-                        <td>里庄町歴史民俗資料館</td>
-                    </tr>
-                    <tr>
-                        <th>利用条件</th>
-                        <td>
-                            <div class="space-y-2">
-                                <div class="flex items-center"><i class="fas fa-eye text-blue-500 mr-2"></i>閲覧: 無料・制限なし</div>
-                                <div class="flex items-center"><i class="fas fa-copy text-amber-500 mr-2"></i>複写: 申請制（学術・教育目的のみ）</div>
-                                <div class="flex items-center"><i class="fas fa-share-alt text-green-500 mr-2"></i>転載: 申請制（出典明記必須）</div>
+                        
+                        <!-- 右カラム - デジタル化・管理情報 -->
+                        <div class="mt-8">
+                            <h3 class="text-lg font-semibold mb-4 pb-2 border-b border-blue-200">デジタル化・管理情報</h3>
+                            
+                            <!-- カード型レイアウトに変更 -->
+                            <div class="grid grid-cols-1 gap-8">
+                                <!-- デジタル化情報カード -->
+                                <div class="bg-blue-50 rounded-lg p-6 shadow-sm border border-blue-100">
+                                    <h4 class="font-medium text-blue-800 mb-4 flex items-center">
+                                        <i class="fas fa-camera-retro mr-2"></i>デジタル化情報
+                                    </h4>
+                                    <table class="excel-table">
+                                        <tbody>
+                                            <tr>
+                                                <th class="w-1/3">撮影日</th>
+                                                <td>２０２５年</td>
+                                            </tr>
+                                            <tr>
+                                                <th>撮影機材</th>
+                                                <td>記載なし</td>
+                                            </tr>
+                                            <tr>
+                                                <th>解像度</th>
+                                                <td>記載なし</td>
+                                            </tr>
+                                            <tr>
+                                                <th>カラー情報</th>
+                                                <td>記載なし</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ファイル形式</th>
+                                                <td>JPEG</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <!-- 権利・利用情報カード -->
+                                <div class="bg-green-50 rounded-lg p-6 shadow-sm border border-green-100">
+                                    <h4 class="font-medium text-green-800 mb-4 flex items-center">
+                                        <i class="fas fa-copyright mr-2"></i>権利・利用情報
+                                    </h4>
+                                    <table class="excel-table">
+                                        <tbody>
+                                            <tr>
+                                                <th class="w-1/3">所有権</th>
+                                                <td>里庄町歴史民俗資料館</td>
+                                            </tr>
+                                            <tr>
+                                                <th>利用条件</th>
+                                                <td>
+                                                    <div class="space-y-2">
+                                                        <div class="flex items-center"><i class="fas fa-eye text-blue-500 mr-2"></i>閲覧: 無料・制限なし</div>
+                                                        <div class="flex items-center"><i class="fas fa-copy text-amber-500 mr-2"></i>複写: 申請制（学術・教育目的のみ）</div>
+                                                        <div class="flex items-center"><i class="fas fa-share-alt text-green-500 mr-2"></i>転載: 申請制（出典明記必須）</div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>閲覧制限</th>
+                                                <td>なし</td>
+                                            </tr>
+                                            <tr>
+                                                <th>引用方法</th>
+                                                <td class="bg-yellow-50 p-2 border-l-2 border-yellow-400">「小川郷太郎, No., 明治年月日, 里庄町歴史民俗資料館所蔵」</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>閲覧制限</th>
-                        <td>なし</td>
-                    </tr>
-                    <tr>
-                        <th>引用方法</th>
-                        <td class="bg-yellow-50 p-2 border-l-2 border-yellow-400">「小川郷太郎, No., 明治年月日, 里庄町歴史民俗資料館所蔵」</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -988,16 +885,30 @@
         
         // 画像ビューア操作
         document.addEventListener("DOMContentLoaded", function() {
-            // 画像表示用変数
+            // 原本用画像表示変数
             let currentScale = 1;
             let currentRotation = 0;
             let offsetX = 0;
             let offsetY = 0;
             
+            // 翻刻用画像表示変数
+            let transcriptionScale = 1;
+            let transcriptionRotation = 0;
+            let transcriptionOffsetX = 0;
+            let transcriptionOffsetY = 0;
+            
             // 要素の取得
             const panZoomContainer = document.getElementById('panZoomContainer');
             const mainImage = document.getElementById('mainImage');
+            const transcriptionImage = document.getElementById('transcriptionImage');
             const loadStatus = document.getElementById('loadStatus');
+            
+            // モード切り替え要素の取得
+            const originalModeButton = document.getElementById('originalMode');
+            const transcriptionModeButton = document.getElementById('transcriptionMode');
+            const originalDisplay = document.getElementById('originalDisplay');
+            const transcriptionDisplay = document.getElementById('transcriptionDisplay');
+            const thumbnailGallery = document.getElementById('thumbnailGallery');
             
             // デバッグモード (開発時は true に設定)
             const debugMode = false;
@@ -1025,6 +936,33 @@
             
             // 即時実行
             setFirstImageAsThumbnail();
+            
+            // 原本・翻刻モード切り替え
+            originalModeButton.addEventListener('click', function() {
+                // ボタンの状態を更新
+                originalModeButton.classList.add('active');
+                transcriptionModeButton.classList.remove('active');
+                
+                // 表示エリアを切り替え
+                originalDisplay.classList.remove('hidden');
+                transcriptionDisplay.classList.add('hidden');
+                
+                console.log('原本モードに切り替えました');
+            });
+            
+            transcriptionModeButton.addEventListener('click', function() {
+                // ボタンの状態を更新
+                transcriptionModeButton.classList.add('active');
+                originalModeButton.classList.remove('active');
+                
+                // 表示エリアを切り替え
+                originalDisplay.classList.add('hidden');
+                transcriptionDisplay.classList.remove('hidden');
+                
+                console.log('翻刻モードに切り替えました');
+            });
+            
+            // === 原本用画像操作 ===
             
             // ズームイン
             document.getElementById('zoomIn').addEventListener('click', function() {
@@ -1061,38 +999,110 @@
                 applyTransform();
             });
             
-            // トランスフォーム適用
+            // トランスフォーム適用（原本用）
             function applyTransform() {
                 mainImage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${currentScale}) rotate(${currentRotation}deg)`;
                 mainImage.style.transition = 'transform 0.3s ease';
             }
             
-            // フルスクリーン
+            // === 翻刻用画像操作 ===
+            
+            // 翻刻用ズームイン
+            document.getElementById('transcriptionZoomIn').addEventListener('click', function() {
+                transcriptionScale += 0.25;
+                applyTranscriptionTransform();
+            });
+            
+            // 翻刻用ズームアウト
+            document.getElementById('transcriptionZoomOut').addEventListener('click', function() {
+                if (transcriptionScale > 0.5) {
+                    transcriptionScale -= 0.25;
+                }
+                applyTranscriptionTransform();
+            });
+            
+            // 翻刻用画面にフィット
+            document.getElementById('transcriptionFitToScreen').addEventListener('click', function() {
+                transcriptionScale = 1;
+                transcriptionRotation = 0;
+                transcriptionOffsetX = 0;
+                transcriptionOffsetY = 0;
+                applyTranscriptionTransform();
+            });
+            
+            // 翻刻用左回転
+            document.getElementById('transcriptionRotateLeft').addEventListener('click', function() {
+                transcriptionRotation -= 90;
+                applyTranscriptionTransform();
+            });
+            
+            // 翻刻用右回転
+            document.getElementById('transcriptionRotateRight').addEventListener('click', function() {
+                transcriptionRotation += 90;
+                applyTranscriptionTransform();
+            });
+            
+            // トランスフォーム適用（翻刻用）
+            function applyTranscriptionTransform() {
+                transcriptionImage.style.transform = `translate(${transcriptionOffsetX}px, ${transcriptionOffsetY}px) scale(${transcriptionScale}) rotate(${transcriptionRotation}deg)`;
+                transcriptionImage.style.transition = 'transform 0.3s ease';
+            }
+            
+            // === フルスクリーン機能 ===
+            
+            // 原本用フルスクリーン
             document.getElementById('fullScreen').addEventListener('click', function() {
-                const viewer = document.querySelector('.image-viewer');
+                const viewer = originalDisplay.querySelector('.image-viewer');
                 if (!document.fullscreenElement) {
                     if (viewer.requestFullscreen) {
                         viewer.requestFullscreen();
-                    } else if (viewer.webkitRequestFullscreen) { // Safari
+                    } else if (viewer.webkitRequestFullscreen) { 
                         viewer.webkitRequestFullscreen();
-                    } else if (viewer.msRequestFullscreen) { // IE11
+                    } else if (viewer.msRequestFullscreen) { 
                         viewer.msRequestFullscreen();
                     }
                 } else {
                     if (document.exitFullscreen) {
                         document.exitFullscreen();
-                    } else if (document.webkitExitFullscreen) { // Safari
+                    } else if (document.webkitExitFullscreen) { 
                         document.webkitExitFullscreen();
-                    } else if (document.msExitFullscreen) { // IE11
+                    } else if (document.msExitFullscreen) { 
                         document.msExitFullscreen();
                     }
                 }
             });
             
-            // サムネイルクリック
+            // 翻刻用フルスクリーン
+            document.getElementById('transcriptionFullScreen').addEventListener('click', function() {
+                const viewer = transcriptionDisplay.querySelector('.image-viewer');
+                if (!document.fullscreenElement) {
+                    if (viewer.requestFullscreen) {
+                        viewer.requestFullscreen();
+                    } else if (viewer.webkitRequestFullscreen) { 
+                        viewer.webkitRequestFullscreen();
+                    } else if (viewer.msRequestFullscreen) { 
+                        viewer.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) { 
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { 
+                        document.msExitFullscreen();
+                    }
+                }
+            });
+            
+            // サムネイルクリック（原本モードでのみ有効）
             const thumbnails = document.querySelectorAll('.thumbnail');
             thumbnails.forEach(thumbnail => {
                 thumbnail.addEventListener('click', function() {
+                    // 原本モードでない場合は何もしない
+                    if (!originalModeButton.classList.contains('active')) {
+                        return;
+                    }
+                    
                     // アクティブなサムネイルを更新
                     thumbnails.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
@@ -1138,51 +1148,9 @@
                 });
             });
             
-            // 縦書き/横書き切り替え
-            const verticalModeButton = document.getElementById('vertical-mode');
-            const horizontalModeButton = document.getElementById('horizontal-mode');
-            const verticalContent = document.getElementById('vertical-content');
-            const horizontalContent = document.getElementById('horizontal-content');
+            // === 画像のドラッグ機能 ===
             
-            if (verticalModeButton && horizontalModeButton) {
-                verticalModeButton.addEventListener('click', function() {
-                    verticalModeButton.classList.add('active');
-                    horizontalModeButton.classList.remove('active');
-                    if (verticalContent) verticalContent.style.display = 'block';
-                    if (horizontalContent) horizontalContent.style.display = 'none';
-                });
-                
-                horizontalModeButton.addEventListener('click', function() {
-                    horizontalModeButton.classList.add('active');
-                    verticalModeButton.classList.remove('active');
-                    if (horizontalContent) horizontalContent.style.display = 'block';
-                    if (verticalContent) verticalContent.style.display = 'none';
-                });
-            }
-            
-            // 文字サイズ調整
-            const verticalTextElement = document.getElementById('vertical-text-element');
-            let fontSize = 1.1; // 初期サイズ (rem)
-            
-            if (document.getElementById('increase-font') && verticalTextElement) {
-                document.getElementById('increase-font').addEventListener('click', function() {
-                    if (fontSize < 1.8) {
-                        fontSize += 0.1;
-                        verticalTextElement.style.fontSize = fontSize + 'rem';
-                    }
-                });
-            }
-            
-            if (document.getElementById('decrease-font') && verticalTextElement) {
-                document.getElementById('decrease-font').addEventListener('click', function() {
-                    if (fontSize > 0.8) {
-                        fontSize -= 0.1;
-                        verticalTextElement.style.fontSize = fontSize + 'rem';
-                    }
-                });
-            }
-            
-            // 画像のドラッグ機能
+            // 原本用ドラッグ機能
             let isDragging = false;
             let startX, startY, initialX = 0, initialY = 0;
             
@@ -1196,6 +1164,11 @@
             window.addEventListener('touchend', dragEnd);
             
             function dragStart(e) {
+                // 原本モードでない場合は何もしない
+                if (!originalModeButton.classList.contains('active')) {
+                    return;
+                }
+                
                 if (e.type === 'touchstart') {
                     startX = e.touches[0].clientX;
                     startY = e.touches[0].clientY;
@@ -1235,6 +1208,66 @@
                 isDragging = false;
                 // ドラッグ終了後、再びトランジションを有効化
                 mainImage.style.transition = 'transform 0.3s ease';
+            }
+            
+            // 翻刻用ドラッグ機能
+            let isTranscriptionDragging = false;
+            let transcriptionStartX, transcriptionStartY, transcriptionInitialX = 0, transcriptionInitialY = 0;
+            
+            transcriptionImage.addEventListener('mousedown', transcriptionDragStart);
+            transcriptionImage.addEventListener('touchstart', transcriptionDragStart);
+            
+            window.addEventListener('mousemove', transcriptionDrag);
+            window.addEventListener('touchmove', transcriptionDrag);
+            
+            window.addEventListener('mouseup', transcriptionDragEnd);
+            window.addEventListener('touchend', transcriptionDragEnd);
+            
+            function transcriptionDragStart(e) {
+                // 翻刻モードでない場合は何もしない
+                if (!transcriptionModeButton.classList.contains('active')) {
+                    return;
+                }
+                
+                if (e.type === 'touchstart') {
+                    transcriptionStartX = e.touches[0].clientX;
+                    transcriptionStartY = e.touches[0].clientY;
+                } else {
+                    transcriptionStartX = e.clientX;
+                    transcriptionStartY = e.clientY;
+                }
+                
+                transcriptionInitialX = transcriptionOffsetX;
+                transcriptionInitialY = transcriptionOffsetY;
+                isTranscriptionDragging = true;
+                
+                // ドラッグ中はトランジションを無効化
+                transcriptionImage.style.transition = 'none';
+            }
+            
+            function transcriptionDrag(e) {
+                if (!isTranscriptionDragging) return;
+                e.preventDefault();
+                
+                let currentX, currentY;
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX;
+                    currentY = e.touches[0].clientY;
+                } else {
+                    currentX = e.clientX;
+                    currentY = e.clientY;
+                }
+                
+                transcriptionOffsetX = transcriptionInitialX + (currentX - transcriptionStartX);
+                transcriptionOffsetY = transcriptionInitialY + (currentY - transcriptionStartY);
+                
+                transcriptionImage.style.transform = `translate(${transcriptionOffsetX}px, ${transcriptionOffsetY}px) scale(${transcriptionScale}) rotate(${transcriptionRotation}deg)`;
+            }
+            
+            function transcriptionDragEnd() {
+                isTranscriptionDragging = false;
+                // ドラッグ終了後、再びトランジションを有効化
+                transcriptionImage.style.transition = 'transform 0.3s ease';
             }
         });
     </script>
